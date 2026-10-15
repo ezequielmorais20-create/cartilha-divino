@@ -1,0 +1,767 @@
+<title>Cartilha do Divino de São Luís</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@700&family=Alegreya:ital,wght@0,400;0,600;0,700;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: cartilha de leitura vertical, faixa de azulejo no topo, navegação fixa por capítulos, peças interativas dentro de cada capítulo */
+:root{
+  --bg:#FBF3E6;
+  --paper:#FFFFFF;
+  --ink:#231A1C;
+  --muted:#6B5E61;
+  --line:#EBD9C2;
+  --divino:#B5121B;        /* vermelho da bandeira do Divino */
+  --divino-soft:#FBE4E1;
+  --azulejo:#6E0A10;       /* azul dos azulejos de São Luís */
+  --azulejo-soft:#F6E1DF;
+  --ouro:#A8741C;          /* dourado da coroa e da tribuna */
+  --ouro-soft:#FCF0D6;
+  --ok:#2E7D4F; --bad:#B3261E;
+  --display:"Playfair Display", Georgia, "Times New Roman", serif;
+  --body:"Alegreya", Georgia, "Times New Roman", serif;
+  --ui:"Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17121A; --paper:#211A23; --ink:#F2EAEA; --muted:#B9ABAF; --line:#3A2F38;
+  --divino:#F07084; --divino-soft:#3B1D25; --azulejo:#E8A0A6; --azulejo-soft:#3A1A1E;
+  --ouro:#E2B762; --ouro-soft:#382D18; --ok:#7CCB9A; --bad:#F2918A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17121A; --paper:#211A23; --ink:#F2EAEA; --muted:#B9ABAF; --line:#3A2F38;
+  --divino:#F07084; --divino-soft:#3B1D25; --azulejo:#E8A0A6; --azulejo-soft:#3A1A1E;
+  --ouro:#E2B762; --ouro-soft:#382D18; --ok:#7CCB9A; --bad:#F2918A; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6}
+a{color:var(--azulejo)}
+:focus-visible{outline:3px solid var(--ouro);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.15;margin:0 0 8px;color:var(--divino)}
+h3{font-family:var(--ui);font-size:19px;margin:0 0 4px}
+p{margin:0 0 14px;max-width:68ch}
+.eyebrow{font-family:var(--ui);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.lead{font-size:20px;color:var(--muted);max-width:62ch}
+.src{font-family:var(--ui);font-size:14px;color:var(--muted)}
+.src:not(.keep){display:none!important} /* citações por trecho retiradas a pedido; as referências ficam na seção Fontes */
+.src a{color:var(--muted)}
+
+/* Faixa de azulejo */
+.tiles{height:56px;background-color:var(--azulejo-soft);
+  background-image:
+   radial-gradient(circle at 50% 50%, var(--azulejo) 0 5px, transparent 6px),
+   radial-gradient(circle at 0 0, var(--azulejo) 0 9px, transparent 10px),
+   radial-gradient(circle at 100% 0, var(--azulejo) 0 9px, transparent 10px),
+   radial-gradient(circle at 0 100%, var(--azulejo) 0 9px, transparent 10px),
+   radial-gradient(circle at 100% 100%, var(--azulejo) 0 9px, transparent 10px),
+   linear-gradient(45deg, transparent 46%, var(--azulejo) 47% 53%, transparent 54%),
+   linear-gradient(-45deg, transparent 46%, var(--azulejo) 47% 53%, transparent 54%);
+  background-size:28px 28px;opacity:.85}
+
+header.hero{padding:40px 28px 32px;margin-top:12px;background:#B5121B;color:#FBEEDC;border-radius:22px;box-shadow:inset 0 0 0 3px #E0A83A, inset 0 0 0 9px #B5121B, inset 0 0 0 10px #E0A83A}
+header.hero .eyebrow{color:#F4D08A}
+header.hero .lead{color:#FBEEDC}
+header.hero .chip{background:rgba(224,168,58,.22);color:#FBEEDC;border:1px solid #E0A83A}
+.hero h1{font-family:"Cinzel",var(--display);font-weight:700;font-size:clamp(34px,6vw,64px);line-height:1.05;margin:6px 0 14px;color:#FBEEDC}
+.hero h1 em{font-style:normal;color:#F4D08A}
+.hero-grid{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center}
+.hero-grid>div{min-width:0}
+.dove{width:240px}
+@media (max-width:700px){.hero-grid{grid-template-columns:1fr}.dove{width:100%!important;max-width:360px;order:-1}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-family:var(--ui);font-size:14px;padding:4px 10px;border-radius:999px;background:var(--ouro-soft);color:var(--ink)}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+nav.toc a{font-family:var(--ui);font-size:15px;font-weight:500;white-space:nowrap;text-decoration:none;color:var(--muted);padding:6px 12px;border-radius:999px}
+nav.toc a.on{background:var(--divino);color:var(--bg)}
+
+section{padding-block:48px;border-bottom:1px solid var(--line);scroll-margin-top:60px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:18px}
+.cols>*{min-width:0}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px}
+.note{border-left:4px solid var(--ouro);background:var(--ouro-soft);padding:12px 16px;border-radius:0 8px 8px 0;font-size:16px;max-width:72ch}
+.note strong{font-family:var(--ui)}
+
+/* Linha do tempo histórica */
+.timeline{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:0}
+.timeline li{display:grid;grid-template-columns:130px 1fr;gap:16px;padding:12px 0;border-top:1px dashed var(--line)}
+.timeline li>*{min-width:0}
+.timeline .when{font-family:var(--ui);font-weight:700;color:var(--azulejo);font-variant-numeric:tabular-nums}
+@media (max-width:560px){.timeline li{grid-template-columns:1fr;gap:2px}}
+
+/* Ciclo ritual */
+.ritual{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:20px;margin-top:20px}
+.ritual>*{min-width:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:4px;counter-reset:s}
+.steps button{width:100%;text-align:left;font:500 16px var(--ui);color:var(--ink);background:transparent;border:1px solid transparent;border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;gap:10px;align-items:baseline}
+.steps button .n{font-variant-numeric:tabular-nums;color:var(--muted);min-width:1.6em}
+.steps button:hover{background:var(--paper);border-color:var(--line)}
+.steps button[aria-selected="true"]{background:var(--divino-soft);border-color:var(--divino)}
+.stepcard{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;align-self:start;position:sticky;top:76px}
+.stepcard .when{font-family:var(--ui);font-size:14px;color:var(--azulejo);font-weight:700}
+.stepcard .toque{margin-top:12px;font-family:var(--ui);font-size:15px;background:var(--azulejo-soft);border-radius:8px;padding:8px 12px}
+.stepnav{display:flex;justify-content:space-between;margin-top:16px;gap:8px}
+@media (max-width:760px){.ritual{grid-template-columns:1fr}.stepcard{position:static}}
+
+button.btn{font:600 15px var(--ui);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:8px 14px;cursor:pointer}
+button.btn:hover{border-color:var(--divino)}
+button.btn.primary{background:var(--divino);color:var(--bg);border-color:var(--divino)}
+
+/* Gerações */
+.gens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+@media (max-width:760px){.gens{grid-template-columns:1fr}}
+.gen{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;border-top:6px solid var(--g)}
+.gen .age{font-family:var(--ui);font-size:14px;color:var(--muted)}
+.lineage{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 6px;font-family:var(--ui);font-size:15px}
+.lineage span.p{background:var(--divino-soft);padding:4px 10px;border-radius:6px}
+.lineage span.a{color:var(--muted)}
+
+/* Mestras */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.filters button{font:500 15px var(--ui);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--azulejo);color:var(--bg);border-color:var(--azulejo)}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.person{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.person .role{font-family:var(--ui);font-size:14px;color:var(--divino);font-weight:700}
+.person .house{font-family:var(--ui);font-size:14px;color:var(--muted)}
+.person ul{margin:0;padding-left:18px;font-size:16px}
+.person .gap{font-family:var(--ui);font-size:14px;background:var(--ouro-soft);border-radius:6px;padding:6px 10px}
+.person .src{margin-top:auto}
+
+/* Glossário */
+.search{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0}
+.search input{font:16px var(--ui);padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);flex:1 1 260px;min-width:0}
+.letters{display:flex;flex-wrap:wrap;gap:4px}
+.letters button{font:600 14px var(--ui);width:32px;height:32px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);cursor:pointer}
+.letters button[aria-pressed="true"]{background:var(--divino);color:var(--bg);border-color:var(--divino)}
+dl.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin:0}
+.term{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.term dt{font-family:var(--ui);font-weight:700;font-size:17px;color:var(--azulejo)}
+.term dd{margin:4px 0 0;font-size:16px}
+.term dd .src{display:block;margin-top:4px;font-size:13px}
+.count{font-family:var(--ui);font-size:14px;color:var(--muted)}
+
+/* Repertório */
+.toques{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+.toques details{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.toques summary{cursor:pointer;font-family:var(--ui);font-weight:700;font-size:17px;display:flex;gap:12px;align-items:baseline}
+.toques summary .n{color:var(--divino);font-variant-numeric:tabular-nums;min-width:1.5em}
+.toques details p{margin:8px 0 0;font-size:16px}
+.drum{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.beat{width:30px;height:30px;border-radius:50%;border:2px solid var(--divino);transition:transform .08s,background .08s}
+.beat.on{background:var(--divino);transform:scale(1.15)}
+
+/* Orquestra do Divino */
+.orq{margin-top:22px;background:#B5121B;color:#FBEEDC;border-radius:18px;padding:22px;box-shadow:inset 0 0 0 2px #E0A83A}
+.orq h3{font-family:"Cinzel",var(--display);font-size:24px;color:#F4D08A;margin-bottom:8px}
+.orq h4{font-family:var(--ui);font-size:16px;margin:18px 0 8px;color:#F4D08A}
+.orq-note,.orq-sub{font-size:16px;margin:0 0 6px}
+.orq .src{color:#F3DFC0}
+.pads{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.pad{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px 10px;border-radius:14px;border:2px solid #E0A83A;background:#8C0D14;color:#FBEEDC;font:600 15px var(--ui);cursor:pointer;position:relative;transition:transform .07s,background .07s}
+.pad img,.pad svg{width:56px;height:56px;border-radius:50%}
+.pad kbd{position:absolute;top:6px;right:8px;font:700 11px var(--ui);color:#F4D08A;opacity:.85}
+.pad:hover{background:#6E0A10}
+.pad:focus-visible,.orq .btn:focus-visible{outline:3px solid #F4D08A;outline-offset:2px}
+.pad.hit{background:#E0A83A;color:#6E0A10;transform:scale(.96)}
+.orq-ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:18px}
+.orq .btn{background:#FBEEDC;color:#6E0A10;border-color:#E0A83A}
+.orq .btn.primary{background:#E0A83A;color:#6E0A10}
+.orq .btn[aria-pressed="true"]{background:#6E0A10;color:#F4D08A}
+.tempo{font:600 14px var(--ui);display:flex;align-items:center;gap:8px;margin-left:auto}
+.tempo input{accent-color:#E0A83A;width:130px}
+.steps16{display:grid;grid-template-columns:repeat(16,1fr);gap:4px;margin:14px 0 6px}
+.steps16 span{height:10px;border-radius:5px;background:#6E0A10}
+.steps16 span:nth-child(4n+1){background:#8C0D14;box-shadow:inset 0 0 0 1px #E0A83A}
+.steps16 span.on{background:#F4D08A}
+@media (max-width:560px){.tempo{margin-left:0}}
+@media (prefers-reduced-motion:reduce){.pad{transition:none}}
+
+/* Caixeiras animadas */
+.cxanim-wrap{position:relative;margin:0 0 28px}
+#cxanim{width:100%;height:auto;display:block;border-radius:14px}
+.cxplay{position:absolute;left:14px;bottom:14px;box-shadow:0 0 0 2px #E0A83A}
+.cxplay[aria-pressed="true"]{background:#6E0A10;color:#F4D08A}
+#cxanim .cx{transform-box:fill-box;transform-origin:50% 100%;animation:cxsway 3.2s ease-in-out infinite alternate}
+#cxanim .cxw:nth-child(odd) .cx{animation-delay:-1.6s}
+#cxanim .cab{transform-box:fill-box;transform-origin:50% 95%}
+#cxanim .laco{transform-box:fill-box;transform-origin:0% 100%;animation:cxlaco 1.4s ease-in-out infinite alternate}
+#cxanim .stk-l{transform-box:fill-box;transform-origin:0 0}
+#cxanim .stk-r{transform-box:fill-box;transform-origin:100% 0}
+#cxwrap.playing .cx{animation-duration:1.2s}
+@keyframes cxsway{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}
+@keyframes cxlaco{from{transform:rotate(-10deg)}to{transform:rotate(12deg)}}
+@media (max-width:560px){.cxplay{position:static;margin-top:10px;width:100%}}
+@media (prefers-reduced-motion:reduce){#cxanim .cx,#cxanim .laco{animation:none}}
+@media (prefers-reduced-motion:reduce){.beat{transition:none}}
+
+/* Quiz */
+.quiz{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;margin-top:18px;max-width:720px}
+.quiz .q{font-size:20px;margin-bottom:12px}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;font:16px var(--ui);padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+.opts button.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--paper))}
+.opts button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--paper))}
+.feedback{font-family:var(--ui);font-size:15px;margin-top:10px;min-height:1.4em}
+.progress{font-family:var(--ui);font-size:14px;color:var(--muted);margin-bottom:6px}
+
+/* Lacunas e fontes */
+.todo{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px;max-width:760px}
+.todo label{display:flex;gap:10px;align-items:flex-start;font-size:17px;cursor:pointer}
+.todo input{margin-top:6px;accent-color:var(--divino);width:18px;height:18px;flex:none}
+ol.refs{padding-left:22px;font-size:16px;max-width:80ch}
+ol.refs li{margin-bottom:8px}
+.banner{display:block;width:100%;max-width:100%;height:auto;border-radius:14px;margin-top:22px;border:1px solid var(--line)}
+.hq{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:20px}
+.hq figure{margin:0;min-width:0}.hq img{width:100%;height:auto;display:block}
+.hq figcaption{font-family:var(--ui);font-size:15px;margin-top:6px;color:var(--muted)}
+.icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px;margin-top:18px}
+.icons figure{margin:0;text-align:center;min-width:0}.icons img{width:96px;height:96px}
+.icons figcaption{font-family:var(--ui);font-size:15px;font-weight:700;margin-top:4px}
+.icons small{display:block;font-weight:400;color:var(--muted);font-size:13px;line-height:1.35}
+.stepcard img{width:110px;height:110px;float:right;margin:0 0 8px 12px}
+.hero-img{width:100%;max-width:100%;height:auto;display:block;border-radius:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0 6px}
+.stats div{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.stats b{display:block;font-family:var(--display);font-weight:400;font-size:36px;color:var(--divino);line-height:1.1}
+.stats span{font-family:var(--ui);font-size:15px;color:var(--muted)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;margin-top:18px;align-items:start}
+@media (max-width:820px){.mapgrid{grid-template-columns:1fr}}
+.places{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.place{display:flex;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.place>div{min-width:0}
+.place .pn{flex:none;width:30px;height:30px;border-radius:50%;color:#fff;font:700 15px var(--ui);display:grid;place-items:center}
+.place strong{font-family:var(--ui);font-size:16px;display:block}
+.place .where{font-family:var(--ui);font-size:14px;color:var(--azulejo);display:block}
+.place p{font-size:15px;margin:4px 0 2px}
+.place .src{font-size:12px}
+.ptop{display:flex;gap:12px;align-items:center}.ptop>div{min-width:0}.pt{width:76px;height:76px;flex:none}
+footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--muted)}
+</style>
+
+<div class="tiles" aria-hidden="true"></div>
+
+<header class="hero wrap" id="inicio">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Cartilha interativa · São Luís do Maranhão</div>
+      <h1>A Festa do <em>Divino Espírito Santo</em> em São Luís</h1>
+      <p class="lead">Um guia para conhecer a festa que as caixeiras conduzem nos terreiros e casas da cidade: sua história, como o saber passa de uma geração para outra, quem são algumas de suas mestras, as palavras da festa e os toques que ela não pode deixar de ter.</p>
+      <div class="chips">
+        <span class="chip">Histórico cultural</span><span class="chip">Formação de gerações</span><span class="chip">Mestras e mestres</span><span class="chip">Glossário</span><span class="chip">Repertório musical</span>
+      </div>
+    </div>
+    <img class="dove" src="img/capa.svg" data-still="img/capa.jpg" alt="Caixeiras tocando caixa diante dos casarões de São Luís, com crianças do império e o mastro" style="width:240px;height:auto;border-radius:14px">
+  </div>
+</header>
+
+<nav class="toc" aria-label="Capítulos">
+  <div class="wrap">
+    <a href="#historico">1. Histórico</a>
+    <a href="#ciclo">2. O ciclo da festa</a>
+    <a href="#geracoes">3. Formação de gerações</a>
+    <a href="#personagens">Personagens</a>
+    <a href="#mestras">4. Mestras</a>
+    <a href="#mapa">Mapa</a>
+    <a href="#glossario">5. Glossário</a>
+    <a href="#repertorio">6. Repertório</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</nav>
+
+<main>
+<section id="historico" class="wrap">
+  <div class="eyebrow">Capítulo 1</div>
+  <h2>Histórico cultural</h2>
+  <img src="img/divino.svg" data-still="img/divino.png" alt="Emblema do Divino: pomba creme de asas abertas com auréola e chamas douradas sobre fundo vermelho" style="float:right;width:min(220px,42%);height:auto;margin:0 0 12px 16px;background:#B5121B;border-radius:50%;padding:8px;box-shadow:0 0 0 3px #E0A83A">
+  <p>A Festa do Divino Espírito Santo é uma festa do catolicismo popular que se espalhou pelo mundo de língua portuguesa a partir dos Açores. No período colonial, casais açorianos foram trazidos para o Brasil e a devoção veio com eles. No Maranhão, ela se firmou em Alcântara e se espalhou pelo estado. <span class="src">(Ferretti, 2005; O Imparcial, 2015)</span></p>
+  <p>Em São Luís, a festa tem uma marca própria: ela faz parte do calendário dos terreiros de <strong>tambor de mina</strong>. Quase todos os terreiros organizam uma festa do Divino por ano, e o Centro de Cultura Popular Domingos Vieira Filho estimava mais de cem festas anuais na cidade. Quem conduz a música e o ritual são as <strong>caixeiras</strong>, mulheres que tocam a caixa e cantam os louvores ao Divino.</p>
+  <p>No centro da festa estão um altar ricamente decorado, a <em>tribuna</em>, um <em>mastro</em> levantado e derrubado com ritual, e um <em>império</em> de crianças vestidas como uma corte, com imperador, imperatriz e mordomos.</p>
+
+  <h3 style="margin-top:22px">A história em quatro quadros</h3>
+  <div class="hq">
+    <figure><img src="img/hq1.svg" data-still="img/hq1.png" alt="Caravela no mar dos Açores com a bandeira do Divino"><figcaption>1. A devoção nasce em Portugal e se espalha a partir dos Açores.</figcaption></figure>
+    <figure><img src="img/hq2.svg" data-still="img/hq2.png" alt="Caixeira diante de casarões"><figcaption>2. Casais açorianos chegam ao Brasil; no Maranhão, a festa se firma em Alcântara.</figcaption></figure>
+    <figure><img src="img/hq3.svg" data-still="img/hq3.png" alt="Tribuna enfeitada com coroa e pomba, entre duas caixeiras"><figcaption>3. Em São Luís, os terreiros de tambor de mina fazem a festa todo ano.</figcaption></figure>
+    <figure><img src="img/hq4.svg" data-still="img/hq4.png" alt="Caixeiras de várias idades e uma bandeireira"><figcaption>4. As caixeiras ensinam filhas, netas e aprendizes.</figcaption></figure>
+  </div>
+  <h3 style="margin-top:28px">Os símbolos da festa</h3>
+  <div class="icons">
+    <figure><img src="img/sb_pomba.svg" data-still="img/sb_pomba.png" alt=""><figcaption>Pomba<small>O Espírito Santo</small></figcaption></figure>
+    <figure><img src="img/sb_coroa.svg" data-still="img/sb_coroa.png" alt=""><figcaption>Coroa<small>Do Divino e do império</small></figcaption></figure>
+    <figure><img src="img/sb_bandeira.svg" data-still="img/sb_bandeira.png" alt=""><figcaption>Bandeira<small>Vermelha, com a pomba</small></figcaption></figure>
+    <figure><img src="img/sb_mastro.svg" data-still="img/sb_mastro.png" alt=""><figcaption>Mastro<small>Marca o tempo da festa</small></figcaption></figure>
+    <figure><img src="img/sb_tribuna.svg" data-still="img/sb_tribuna.png" alt=""><figcaption>Tribuna<small>O altar do Divino</small></figcaption></figure>
+    <figure><img src="img/sb_caixa.svg" data-still="img/sb_caixa.png" alt=""><figcaption>Caixa<small>O tambor das caixeiras</small></figcaption></figure>
+  </div>
+  <ol class="timeline" aria-label="Marcos históricos">
+    <li><span class="when">Período colonial</span><span>A devoção ao Divino chega ao Brasil com casais açorianos trazidos pela Coroa portuguesa. <span class="src">(Ferretti, 2005)</span></span></li>
+    <li><span class="when">Fins do séc. XIX</span><span>Há notícias da festa do Divino na Casa das Minas, terreiro jeje de São Luís. <span class="src">(Ferretti, 2005)</span></span></li>
+    <li><span class="when">1950</span><span>Maria Celeste Santos é iniciada como vodunsi na Casa das Minas. Em 1969 ela passa a organizar a festa do Divino da casa. <span class="src">(Ferretti, 2005)</span></span></li>
+    <li><span class="when">1980</span><span>A caixeira Dona Teté começa a trabalhar com o Laborarte e ensina o toque de caixa para um espetáculo. Em 1986 cria um grupo de cacuriá. <span class="src">(Leal, 2018)</span></span></li>
+    <li><span class="when">2004</span><span>Marise Barbosa publica estudo sobre as caixeiras da Casa Fanti-Ashanti, que já faziam a festa havia mais de vinte anos. <span class="src">(Barbosa, 2004)</span></span></li>
+    <li><span class="when">2005</span><span>A exposição <em>Divino Toque do Maranhão</em>, do Centro Nacional de Folclore e Cultura Popular (IPHAN), leva a festa maranhense ao Rio de Janeiro. <span class="src">(Ferretti, 2005)</span></span></li>
+    <li><span class="when">2015</span><span>Dona Jacy Gomes Serra conduz no Laborarte a oficina “No Bater da Minha Caixa”, para formar novas caixeiras. <span class="src">(O Imparcial, 2015)</span></span></li>
+    <li><span class="when">2020</span><span>Lysandra Domingues defende tese sobre as caixeiras de São Luís, guiada por três caixeiras-régias: Dona Luzia, Dona Jacy e Dona Rosa. <span class="src">(Domingues, 2020)</span></span></li>
+    <li><span class="when">2024</span><span>O Museu Casa de Nhozinho, na Praia Grande, faz o primeiro Cortejo do Divino com toque só de mulheres caixeiras, com a Família Menezes. <span class="src">(O Imparcial, 2024)</span></span></li>
+  </ol>
+
+  <div class="cols">
+    <div class="box"><h3>Quem são as caixeiras</h3><p class="src keep" style="font-size:16px;color:var(--ink)">Tradicionalmente são mulheres com mais de cinquenta anos, em geral negras, de baixa renda e moradoras de bairros periféricos. Tocam por promessa e devoção, sem remuneração.</p><p class="src">Domingues, 2020; Ferretti, 2005</p></div>
+    <div class="box"><h3>Festa e terreiro</h3><p class="src keep" style="font-size:16px;color:var(--ink)">A festa liga o catolicismo popular ao tambor de mina. Depois do encerramento, em muitas casas há um toque de mina diante da tribuna em homenagem às entidades.</p><p class="src">Leal, 2018</p></div>
+    <div class="box"><h3>Quando acontece</h3><p class="src keep" style="font-size:16px;color:var(--ink)">Várias casas fazem a festa no Domingo de Pentecostes, mas como são dezenas de festas, elas se espalham por boa parte do ano. As caixeiras-régias tocam em muitas casas: Dona Jacy contava 32 além da Casa das Minas.</p><p class="src">Ferretti, 2005; O Imparcial, 2015</p></div>
+  </div>
+</section>
+
+<section id="ciclo" class="wrap">
+  <figure class="cxanim-wrap" id="cxwrap">
+    <svg id="cxanim" viewBox="0 1070 1240 684" role="img" aria-labelledby="cxanim-t"><title id="cxanim-t">Cinco caixeiras de saia branca e turbantes creme e dourados tocando caixa diante dos casarões de São Luís</title><rect x="0" y="1070" width="1240" height="684" fill="#B5121B"/><g transform="translate(20,1454)"><rect x="0" y="-300" width="190" height="300" fill="#8C0D14"/><path d="M-6,-300 L196,-300 L182,-326 L8,-326Z" fill="#6E0A10"/><path d="M-6,-300 H196" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M13.3,-216 V-261.55 A10.45,10.45 0 0 1 34.2,-261.55 V-216Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M60.8,-216 V-261.55 A10.45,10.45 0 0 1 81.7,-261.55 V-216Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M108.3,-216 V-261.55 A10.45,10.45 0 0 1 129.2,-261.55 V-216Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M155.8,-216 V-261.55 A10.45,10.45 0 0 1 176.7,-261.55 V-216Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M13.3,-126 V-171.55 A10.45,10.45 0 0 1 34.2,-171.55 V-126Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M60.8,-126 V-171.55 A10.45,10.45 0 0 1 81.7,-171.55 V-126Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M108.3,0 V-171.55 A10.45,10.45 0 0 1 129.2,-171.55 V0" fill="#6E0A10" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M155.8,-126 V-171.55 A10.45,10.45 0 0 1 176.7,-171.55 V-126Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></g><g transform="translate(220,1454)"><rect x="0" y="-360" width="170" height="360" fill="#8C0D14"/><path d="M-6,-360 L176,-360 L162,-386 L8,-386Z" fill="#6E0A10"/><path d="M-6,-360 H176" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.866666666666665,-276 V-319.53333333333336 A12.466666666666667,12.466666666666667 0 0 1 40.8,-319.53333333333336 V-276Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M72.53333333333333,-276 V-319.53333333333336 A12.466666666666667,12.466666666666667 0 0 1 97.46666666666667,-319.53333333333336 V-276Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M129.2,-276 V-319.53333333333336 A12.466666666666667,12.466666666666667 0 0 1 154.13333333333333,-319.53333333333336 V-276Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.866666666666665,-186 V-229.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 40.8,-229.53333333333333 V-186Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M72.53333333333333,-186 V-229.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 97.46666666666667,-229.53333333333333 V-186Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M129.2,-186 V-229.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 154.13333333333333,-229.53333333333333 V-186Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.866666666666665,-96 V-139.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 40.8,-139.53333333333333 V-96Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M72.53333333333333,0 V-139.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 97.46666666666667,-139.53333333333333 V0" fill="#6E0A10" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M129.2,-96 V-139.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 154.13333333333333,-139.53333333333333 V-96Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></g><g transform="translate(400,1454)"><rect x="0" y="-280" width="200" height="280" fill="#8C0D14"/><path d="M-6,-280 L206,-280 L192,-306 L8,-306Z" fill="#6E0A10"/><path d="M-6,-280 H206" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M14,-196 V-241 A11,11 0 0 1 36,-241 V-196Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-196 V-241 A11,11 0 0 1 86,-241 V-196Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M114,-196 V-241 A11,11 0 0 1 136,-241 V-196Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M164,-196 V-241 A11,11 0 0 1 186,-241 V-196Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M14,-106 V-151 A11,11 0 0 1 36,-151 V-106Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-106 V-151 A11,11 0 0 1 86,-151 V-106Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M114,0 V-151 A11,11 0 0 1 136,-151 V0" fill="#6E0A10" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M164,-106 V-151 A11,11 0 0 1 186,-151 V-106Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></g><g transform="translate(640,1454)"><rect x="0" y="-340" width="170" height="340" fill="#8C0D14"/><path d="M-6,-340 L176,-340 L162,-366 L8,-366Z" fill="#6E0A10"/><path d="M-6,-340 H176" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.866666666666665,-256 V-299.53333333333336 A12.466666666666667,12.466666666666667 0 0 1 40.8,-299.53333333333336 V-256Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M72.53333333333333,-256 V-299.53333333333336 A12.466666666666667,12.466666666666667 0 0 1 97.46666666666667,-299.53333333333336 V-256Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M129.2,-256 V-299.53333333333336 A12.466666666666667,12.466666666666667 0 0 1 154.13333333333333,-299.53333333333336 V-256Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.866666666666665,-166 V-209.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 40.8,-209.53333333333333 V-166Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M72.53333333333333,-166 V-209.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 97.46666666666667,-209.53333333333333 V-166Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M129.2,-166 V-209.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 154.13333333333333,-209.53333333333333 V-166Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M15.866666666666665,-76 V-119.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 40.8,-119.53333333333333 V-76Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M72.53333333333333,0 V-119.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 97.46666666666667,-119.53333333333333 V0" fill="#6E0A10" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M129.2,-76 V-119.53333333333333 A12.466666666666667,12.466666666666667 0 0 1 154.13333333333333,-119.53333333333333 V-76Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></g><g transform="translate(820,1454)"><rect x="0" y="-300" width="200" height="300" fill="#8C0D14"/><path d="M-6,-300 L206,-300 L192,-326 L8,-326Z" fill="#6E0A10"/><path d="M-6,-300 H206" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M14,-216 V-261 A11,11 0 0 1 36,-261 V-216Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-216 V-261 A11,11 0 0 1 86,-261 V-216Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M114,-216 V-261 A11,11 0 0 1 136,-261 V-216Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M164,-216 V-261 A11,11 0 0 1 186,-261 V-216Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M14,-126 V-171 A11,11 0 0 1 36,-171 V-126Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-126 V-171 A11,11 0 0 1 86,-171 V-126Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M114,0 V-171 A11,11 0 0 1 136,-171 V0" fill="#6E0A10" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M164,-126 V-171 A11,11 0 0 1 186,-171 V-126Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></g><g transform="translate(1030,1454)"><rect x="0" y="-350" width="190" height="350" fill="#8C0D14"/><path d="M-6,-350 L196,-350 L182,-376 L8,-376Z" fill="#6E0A10"/><path d="M-6,-350 H196" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M13.3,-266 V-311.55 A10.45,10.45 0 0 1 34.2,-311.55 V-266Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M60.8,-266 V-311.55 A10.45,10.45 0 0 1 81.7,-311.55 V-266Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M108.3,-266 V-311.55 A10.45,10.45 0 0 1 129.2,-311.55 V-266Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M155.8,-266 V-311.55 A10.45,10.45 0 0 1 176.7,-311.55 V-266Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M13.3,-176 V-221.55 A10.45,10.45 0 0 1 34.2,-221.55 V-176Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M60.8,-176 V-221.55 A10.45,10.45 0 0 1 81.7,-221.55 V-176Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M108.3,-176 V-221.55 A10.45,10.45 0 0 1 129.2,-221.55 V-176Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M155.8,-176 V-221.55 A10.45,10.45 0 0 1 176.7,-221.55 V-176Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M13.3,-86 V-131.55 A10.45,10.45 0 0 1 34.2,-131.55 V-86Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M60.8,-86 V-131.55 A10.45,10.45 0 0 1 81.7,-131.55 V-86Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M108.3,0 V-131.55 A10.45,10.45 0 0 1 129.2,-131.55 V0" fill="#6E0A10" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M155.8,-86 V-131.55 A10.45,10.45 0 0 1 176.7,-131.55 V-86Z" fill="#F4D08A" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></g><g class="cxw" data-i="0"><g transform="translate(150,1746) scale(1.7)"><g class="cx"><clipPath id="sk1"><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z"/></clipPath><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z" fill="#FBEEDC"/><g clip-path="url(#sk1)"><path d="M-100,-44 Q0,-30 100,-44" fill="none" stroke="#E0A83A" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><path d="M-100,-26 Q0,-12 100,-26" fill="none" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M-64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M0,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g><path d="M-34,-148 L-42,-226 Q0,-242 42,-226 L34,-148Z" fill="#FBEEDC"/><path d="M-26,-234 Q0,-216 26,-234" fill="none" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M-38,-224 L-24,-230 L36,-154 L22,-150Z" fill="#8C0D14"/><circle cx="-18" cy="-232" r="3.4" fill="#D42A2F"/><circle cx="-12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="-6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="0" cy="-218" r="3.4" fill="#E0A83A"/><circle cx="6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="18" cy="-232" r="3.4" fill="#D42A2F"/><path d="M-40,-220 Q-62,-184 -30,-150" fill="none" stroke="#8A5A3B" stroke-width="16" stroke-linecap="round"/><path d="M40,-220 Q62,-184 30,-150" fill="none" stroke="#8A5A3B" stroke-width="16" stroke-linecap="round"/><ellipse cx="-42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><ellipse cx="42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><g transform="translate(0,-110) scale(0.82)"><rect x="-46" y="-32" width="92" height="64" rx="4" fill="#D42A2F"/><clipPath id="cx2"><rect x="-46" y="-26" width="92" height="52"/></clipPath>
+ <g clip-path="url(#cx2)"><path d="M-46,-24 L-23,24 L0,-24 L23,24 L46,-24" fill="none" stroke="#F4D08A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></g>
+ <rect x="-50" y="-38" width="100" height="10" rx="4" fill="#E0A83A"/><rect x="-50" y="28" width="100" height="10" rx="4" fill="#E0A83A"/>
+ <ellipse cx="0" cy="-38" rx="50" ry="10" fill="#FBEEDC" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+ </g><path class="stk stk-l" d="M-30,-150 L-8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path class="stk stk-r" d="M30,-150 L8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><g class="cab"><rect x="-9" y="-260" width="18" height="24" fill="#8A5A3B"/><ellipse cx="0" cy="-284" rx="24" ry="29" fill="#8A5A3B"/><path d="M-12,-283.2 q4.32,3.3600000000000003 8.64,0 M3.3600000000000003,-283.2 q4.32,3.3600000000000003 8.64,0 M-5.28,-271.92 q5.28,3.84 10.56,0" fill="none" stroke="#563825" stroke-width="2.16" stroke-linecap="round"/><circle cx="-25" cy="-274" r="4.5" fill="#E0A83A"/><circle cx="25" cy="-274" r="4.5" fill="#E0A83A"/><path d="M-29,-290 Q-38,-330 -2,-334 Q36,-332 30,-290 Q0,-304 -29,-290Z" fill="#E0A83A"/><path d="M-22,-304 Q0,-316 24,-304" fill="none" stroke="#8C0D14" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1 6"/><path class="laco" d="M18,-328 q20,-20 30,-6 q-12,4 -10,18Z" fill="#E0A83A"/></g></g></g></g><g class="cxw" data-i="1"><g transform="translate(385,1746) scale(1.7)"><g class="cx"><clipPath id="sk3"><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z"/></clipPath><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z" fill="#FBEEDC"/><g clip-path="url(#sk3)"><path d="M-100,-44 Q0,-30 100,-44" fill="none" stroke="#E0A83A" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><path d="M-100,-26 Q0,-12 100,-26" fill="none" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M-64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M0,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g><path d="M-34,-148 L-42,-226 Q0,-242 42,-226 L34,-148Z" fill="#FBEEDC"/><path d="M-26,-234 Q0,-216 26,-234" fill="none" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M-38,-224 L-24,-230 L36,-154 L22,-150Z" fill="#8C0D14"/><circle cx="-18" cy="-232" r="3.4" fill="#D42A2F"/><circle cx="-12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="-6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="0" cy="-218" r="3.4" fill="#E0A83A"/><circle cx="6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="18" cy="-232" r="3.4" fill="#D42A2F"/><path d="M-40,-220 Q-62,-184 -30,-150" fill="none" stroke="#6B4226" stroke-width="16" stroke-linecap="round"/><path d="M40,-220 Q62,-184 30,-150" fill="none" stroke="#6B4226" stroke-width="16" stroke-linecap="round"/><ellipse cx="-42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><ellipse cx="42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><g transform="translate(0,-110) scale(0.82)"><rect x="-46" y="-32" width="92" height="64" rx="4" fill="#D42A2F"/><clipPath id="cx4"><rect x="-46" y="-26" width="92" height="52"/></clipPath>
+ <g clip-path="url(#cx4)"><path d="M-46,-24 L-23,24 L0,-24 L23,24 L46,-24" fill="none" stroke="#F4D08A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></g>
+ <rect x="-50" y="-38" width="100" height="10" rx="4" fill="#E0A83A"/><rect x="-50" y="28" width="100" height="10" rx="4" fill="#E0A83A"/>
+ <ellipse cx="0" cy="-38" rx="50" ry="10" fill="#FBEEDC" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+ </g><path class="stk stk-l" d="M-30,-150 L-8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path class="stk stk-r" d="M30,-150 L8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><g class="cab"><rect x="-9" y="-260" width="18" height="24" fill="#6B4226"/><ellipse cx="-23" cy="-288" rx="8" ry="12" fill="#E8E1D6"/><ellipse cx="23" cy="-288" rx="8" ry="12" fill="#E8E1D6"/><ellipse cx="0" cy="-284" rx="24" ry="29" fill="#6B4226"/><path d="M-12,-283.2 q4.32,3.3600000000000003 8.64,0 M3.3600000000000003,-283.2 q4.32,3.3600000000000003 8.64,0 M-5.28,-271.92 q5.28,3.84 10.56,0" fill="none" stroke="#422918" stroke-width="2.16" stroke-linecap="round"/><circle cx="-25" cy="-274" r="4.5" fill="#E0A83A"/><circle cx="25" cy="-274" r="4.5" fill="#E0A83A"/><path d="M-29,-290 Q-38,-330 -2,-334 Q36,-332 30,-290 Q0,-304 -29,-290Z" fill="#FBEEDC"/><path d="M-22,-304 Q0,-316 24,-304" fill="none" stroke="#E0A83A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1 6"/><path class="laco" d="M18,-328 q20,-20 30,-6 q-12,4 -10,18Z" fill="#FBEEDC"/></g></g></g></g><g class="cxw" data-i="2"><g transform="translate(620,1746) scale(1.7)"><g class="cx"><clipPath id="sk5"><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z"/></clipPath><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z" fill="#FBEEDC"/><g clip-path="url(#sk5)"><path d="M-100,-44 Q0,-30 100,-44" fill="none" stroke="#E0A83A" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><path d="M-100,-26 Q0,-12 100,-26" fill="none" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M-64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M0,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g><path d="M-34,-148 L-42,-226 Q0,-242 42,-226 L34,-148Z" fill="#FBEEDC"/><path d="M-26,-234 Q0,-216 26,-234" fill="none" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M-38,-224 L-24,-230 L36,-154 L22,-150Z" fill="#8C0D14"/><circle cx="-18" cy="-232" r="3.4" fill="#D42A2F"/><circle cx="-12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="-6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="0" cy="-218" r="3.4" fill="#E0A83A"/><circle cx="6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="18" cy="-232" r="3.4" fill="#D42A2F"/><path d="M-40,-220 Q-62,-184 -30,-150" fill="none" stroke="#C08A63" stroke-width="16" stroke-linecap="round"/><path d="M40,-220 Q62,-184 30,-150" fill="none" stroke="#C08A63" stroke-width="16" stroke-linecap="round"/><ellipse cx="-42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><ellipse cx="42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><g transform="translate(0,-110) scale(0.82)"><rect x="-46" y="-32" width="92" height="64" rx="4" fill="#D42A2F"/><clipPath id="cx6"><rect x="-46" y="-26" width="92" height="52"/></clipPath>
+ <g clip-path="url(#cx6)"><path d="M-46,-24 L-23,24 L0,-24 L23,24 L46,-24" fill="none" stroke="#F4D08A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></g>
+ <rect x="-50" y="-38" width="100" height="10" rx="4" fill="#E0A83A"/><rect x="-50" y="28" width="100" height="10" rx="4" fill="#E0A83A"/>
+ <ellipse cx="0" cy="-38" rx="50" ry="10" fill="#FBEEDC" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+ </g><path class="stk stk-l" d="M-30,-150 L-8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path class="stk stk-r" d="M30,-150 L8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><g class="cab"><rect x="-9" y="-260" width="18" height="24" fill="#C08A63"/><ellipse cx="0" cy="-284" rx="24" ry="29" fill="#C08A63"/><path d="M-12,-283.2 q4.32,3.3600000000000003 8.64,0 M3.3600000000000003,-283.2 q4.32,3.3600000000000003 8.64,0 M-5.28,-271.92 q5.28,3.84 10.56,0" fill="none" stroke="#77563d" stroke-width="2.16" stroke-linecap="round"/><circle cx="-25" cy="-274" r="4.5" fill="#E0A83A"/><circle cx="25" cy="-274" r="4.5" fill="#E0A83A"/><path d="M-29,-290 Q-38,-330 -2,-334 Q36,-332 30,-290 Q0,-304 -29,-290Z" fill="#E0A83A"/><path d="M-22,-304 Q0,-316 24,-304" fill="none" stroke="#8C0D14" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1 6"/><path class="laco" d="M18,-328 q20,-20 30,-6 q-12,4 -10,18Z" fill="#E0A83A"/></g></g></g></g><g class="cxw" data-i="3"><g transform="translate(855,1746) scale(1.7)"><g class="cx"><clipPath id="sk7"><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z"/></clipPath><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z" fill="#FBEEDC"/><g clip-path="url(#sk7)"><path d="M-100,-44 Q0,-30 100,-44" fill="none" stroke="#E0A83A" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><path d="M-100,-26 Q0,-12 100,-26" fill="none" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M-64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M0,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g><path d="M-34,-148 L-42,-226 Q0,-242 42,-226 L34,-148Z" fill="#FBEEDC"/><path d="M-26,-234 Q0,-216 26,-234" fill="none" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M-38,-224 L-24,-230 L36,-154 L22,-150Z" fill="#8C0D14"/><circle cx="-18" cy="-232" r="3.4" fill="#D42A2F"/><circle cx="-12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="-6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="0" cy="-218" r="3.4" fill="#E0A83A"/><circle cx="6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="18" cy="-232" r="3.4" fill="#D42A2F"/><path d="M-40,-220 Q-62,-184 -30,-150" fill="none" stroke="#A86F4C" stroke-width="16" stroke-linecap="round"/><path d="M40,-220 Q62,-184 30,-150" fill="none" stroke="#A86F4C" stroke-width="16" stroke-linecap="round"/><ellipse cx="-42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><ellipse cx="42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><g transform="translate(0,-110) scale(0.82)"><rect x="-46" y="-32" width="92" height="64" rx="4" fill="#D42A2F"/><clipPath id="cx8"><rect x="-46" y="-26" width="92" height="52"/></clipPath>
+ <g clip-path="url(#cx8)"><path d="M-46,-24 L-23,24 L0,-24 L23,24 L46,-24" fill="none" stroke="#F4D08A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></g>
+ <rect x="-50" y="-38" width="100" height="10" rx="4" fill="#E0A83A"/><rect x="-50" y="28" width="100" height="10" rx="4" fill="#E0A83A"/>
+ <ellipse cx="0" cy="-38" rx="50" ry="10" fill="#FBEEDC" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+ </g><path class="stk stk-l" d="M-30,-150 L-8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path class="stk stk-r" d="M30,-150 L8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><g class="cab"><rect x="-9" y="-260" width="18" height="24" fill="#A86F4C"/><ellipse cx="0" cy="-284" rx="24" ry="29" fill="#A86F4C"/><path d="M-12,-283.2 q4.32,3.3600000000000003 8.64,0 M3.3600000000000003,-283.2 q4.32,3.3600000000000003 8.64,0 M-5.28,-271.92 q5.28,3.84 10.56,0" fill="none" stroke="#68452f" stroke-width="2.16" stroke-linecap="round"/><circle cx="-25" cy="-274" r="4.5" fill="#E0A83A"/><circle cx="25" cy="-274" r="4.5" fill="#E0A83A"/><path d="M-29,-290 Q-38,-330 -2,-334 Q36,-332 30,-290 Q0,-304 -29,-290Z" fill="#FBEEDC"/><path d="M-22,-304 Q0,-316 24,-304" fill="none" stroke="#E0A83A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1 6"/><path class="laco" d="M18,-328 q20,-20 30,-6 q-12,4 -10,18Z" fill="#FBEEDC"/></g></g></g></g><g class="cxw" data-i="4"><g transform="translate(1090,1746) scale(1.7)"><g class="cx"><clipPath id="sk9"><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z"/></clipPath><path d="M-36,-150 L36,-150 L86,-8 Q0,8 -86,-8Z" fill="#FBEEDC"/><g clip-path="url(#sk9)"><path d="M-100,-44 Q0,-30 100,-44" fill="none" stroke="#E0A83A" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><path d="M-100,-26 Q0,-12 100,-26" fill="none" stroke="#E0A83A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M-64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M-16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M0,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M16,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M32,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M48,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M64,-80 q4,10 0,20" fill="none" stroke="#E0A83A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g><path d="M-34,-148 L-42,-226 Q0,-242 42,-226 L34,-148Z" fill="#FBEEDC"/><path d="M-26,-234 Q0,-216 26,-234" fill="none" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M-38,-224 L-24,-230 L36,-154 L22,-150Z" fill="#8C0D14"/><circle cx="-18" cy="-232" r="3.4" fill="#D42A2F"/><circle cx="-12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="-6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="0" cy="-218" r="3.4" fill="#E0A83A"/><circle cx="6" cy="-219.87564434701787" r="3.4" fill="#D42A2F"/><circle cx="12" cy="-225" r="3.4" fill="#E0A83A"/><circle cx="18" cy="-232" r="3.4" fill="#D42A2F"/><path d="M-40,-220 Q-62,-184 -30,-150" fill="none" stroke="#7A4B2E" stroke-width="16" stroke-linecap="round"/><path d="M40,-220 Q62,-184 30,-150" fill="none" stroke="#7A4B2E" stroke-width="16" stroke-linecap="round"/><ellipse cx="-42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><ellipse cx="42" cy="-224" rx="16" ry="13" fill="#FBEEDC"/><g transform="translate(0,-110) scale(0.82)"><rect x="-46" y="-32" width="92" height="64" rx="4" fill="#D42A2F"/><clipPath id="cx10"><rect x="-46" y="-26" width="92" height="52"/></clipPath>
+ <g clip-path="url(#cx10)"><path d="M-46,-24 L-23,24 L0,-24 L23,24 L46,-24" fill="none" stroke="#F4D08A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></g>
+ <rect x="-50" y="-38" width="100" height="10" rx="4" fill="#E0A83A"/><rect x="-50" y="28" width="100" height="10" rx="4" fill="#E0A83A"/>
+ <ellipse cx="0" cy="-38" rx="50" ry="10" fill="#FBEEDC" stroke="#E0A83A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+ </g><path class="stk stk-l" d="M-30,-150 L-8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path class="stk stk-r" d="M30,-150 L8,-134" stroke="#F4D08A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><g class="cab"><rect x="-9" y="-260" width="18" height="24" fill="#7A4B2E"/><ellipse cx="-23" cy="-288" rx="8" ry="12" fill="#E8E1D6"/><ellipse cx="23" cy="-288" rx="8" ry="12" fill="#E8E1D6"/><ellipse cx="0" cy="-284" rx="24" ry="29" fill="#7A4B2E"/><path d="M-12,-283.2 q4.32,3.3600000000000003 8.64,0 M3.3600000000000003,-283.2 q4.32,3.3600000000000003 8.64,0 M-5.28,-271.92 q5.28,3.84 10.56,0" fill="none" stroke="#4c2f1d" stroke-width="2.16" stroke-linecap="round"/><circle cx="-25" cy="-274" r="4.5" fill="#E0A83A"/><circle cx="25" cy="-274" r="4.5" fill="#E0A83A"/><path d="M-29,-290 Q-38,-330 -2,-334 Q36,-332 30,-290 Q0,-304 -29,-290Z" fill="#E0A83A"/><path d="M-22,-304 Q0,-316 24,-304" fill="none" stroke="#8C0D14" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1 6"/><path class="laco" d="M18,-328 q20,-20 30,-6 q-12,4 -10,18Z" fill="#E0A83A"/></g></g></g></g></svg>
+    <button class="btn primary cxplay" id="cxplay" type="button" aria-pressed="false">Ouvir as caixeiras</button>
+  </figure>
+  <div class="eyebrow">Capítulo 2</div>
+  <h2>O ciclo da festa, passo a passo</h2>
+  <p>Toque em cada etapa para ver o que acontece e qual toque das caixas a acompanha. A sequência segue a descrição de Sergio Ferretti para os terreiros de São Luís; cada casa tem suas variações.</p>
+  <div class="ritual">
+    <ol class="steps" id="steps" role="tablist" aria-label="Etapas da festa"></ol>
+    <article class="stepcard" id="stepcard" aria-live="polite"></article>
+  </div>
+</section>
+
+<section id="geracoes" class="wrap">
+  <div class="eyebrow">Capítulo 3</div>
+  <h2>Formação de gerações</h2>
+  <p>Ninguém aprende a ser caixeira em livro. O saber passa pela convivência, pela família e pela prática nas próprias festas. A pesquisadora Lysandra Domingues registra que, sem tocar nos rituais, o aprendizado fica incompleto. Há três frentes em que a festa forma gente nova.</p>
+
+  <img class="banner" src="img/cena-geracoes.svg" data-still="img/cena-geracoes.jpg" alt="Avó, mãe e neta caixeiras tocando caixa, ao lado de uma menina bandeireira">
+  <div class="gens">
+    <div class="gen" style="--g:var(--ouro)">
+      <div class="age">Crianças de 4 a 14 anos</div>
+      <h3>O império</h3>
+      <p style="font-size:16px">Cinco a dez ou mais crianças vestidas com roupas de corte formam o império: casal de imperadores, mordomo régio, mordomo-mor e outros cargos. A cada ano as <em>posses</em> (trajes e insígnias) passam para as próximas crianças. Meninas <em>bandeireiras</em> carregam as bandeiras e dançam com as caixeiras diante do trono e do mastro.</p>
+      <p class="src">Ferretti, 2005; Leal, 2018</p>
+    </div>
+    <div class="gen" style="--g:var(--divino)">
+      <div class="age">Filhas, netas e sobrinhas</div>
+      <h3>A família</h3>
+      <p style="font-size:16px">A transmissão é oral e quase sempre familiar. Dona Jacy Gomes Serra aprendeu com a avó e a mãe; em 2015, uma filha de 17 anos já a acompanhava. As irmãs Menezes cresceram ouvindo os pais cantarem à noite.</p>
+      <div class="lineage" aria-label="Linhagem de Dona Jacy"><span class="p">Avó</span><span class="a">→</span><span class="p">Mãe</span><span class="a">→</span><span class="p">Dona Jacy</span><span class="a">→</span><span class="p">Filha (17 anos em 2015)</span></div>
+      <div class="lineage" aria-label="Linhagem da Família Menezes"><span class="p">José Maria e Francisca de Menezes</span><span class="a">→</span><span class="p">Anunciação, Zezé e Graça</span><span class="a">→</span><span class="p">Bartira</span></div>
+      <p class="src">O Imparcial, 2015 e 2024</p>
+    </div>
+    <div class="gen" style="--g:var(--azulejo)">
+      <div class="age">Jovens e adultos de fora das famílias</div>
+      <h3>Oficinas e grupos</h3>
+      <p style="font-size:16px">Oficinas de caixa no Laborarte e na Casa de Iemanjá abrem o saber para estudantes, artistas e pesquisadores. Em 2015, a oficina de Dona Jacy ensinou história da festa, cânticos e repentes improvisados, sem exigir conhecimento prévio. Em 2024, o cortejo do Museu Casa de Nhozinho emprestou caixas a mulheres que queriam tocar.</p>
+      <p class="src">Leal, 2018; O Imparcial, 2015 e 2024</p>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="box">
+      <h3>Hierarquia do grupo de caixeiras</h3>
+      <p style="font-size:16px"><strong>Caixeira-régia:</strong> dirige o grupo e precisa saber todos os cânticos e etapas do ritual.<br><strong>Caixeira-mor:</strong> ajuda a régia e a substitui quando preciso.<br><strong>Caixeiras:</strong> grupo de oito ou mais mulheres que tocam e cantam.</p>
+      <p class="src">Ferretti, 2005; Leal, 2018; Domingues, 2020</p>
+    </div>
+    <div class="note"><strong>Um cuidado:</strong> as fontes consultadas não descrevem uma “carreira” fixa de bandeireira até caixeira-régia. Bandeireiras e crianças do império têm cargos rituais próprios. Se a sua pesquisa de campo mostrar um caminho assim em alguma casa, registre com o nome da casa e de quem contou.</div>
+  </div>
+</section>
+
+<section id="personagens" class="wrap">
+  <div class="eyebrow">Quem é quem</div>
+  <h2>Os personagens da festa</h2>
+  <div class="icons">
+    <figure><img src="img/pp_regia.svg" data-still="img/pp_regia.png" alt=""><figcaption>Caixeira-régia<small>Lidera o grupo</small></figcaption></figure>
+    <figure><img src="img/pp_mor.svg" data-still="img/pp_mor.png" alt=""><figcaption>Caixeira-mor<small>Ajuda e substitui a régia</small></figcaption></figure>
+    <figure><img src="img/pp_caixeira.svg" data-still="img/pp_caixeira.png" alt=""><figcaption>Caixeira<small>Toca e canta</small></figcaption></figure>
+    <figure><img src="img/pp_bandeireira.svg" data-still="img/pp_bandeireira.png" alt=""><figcaption>Bandeireira<small>Leva a bandeira e dança</small></figcaption></figure>
+    <figure><img src="img/pp_imperador.svg" data-still="img/pp_imperador.png" alt=""><figcaption>Imperador<small>Topo do império</small></figcaption></figure>
+    <figure><img src="img/pp_imperatriz.svg" data-still="img/pp_imperatriz.png" alt=""><figcaption>Imperatriz<small>Casal real com o imperador</small></figcaption></figure>
+    <figure><img src="img/pp_mordomo.svg" data-still="img/pp_mordomo.png" alt=""><figcaption>Mordomos<small>Régio e mor</small></figcaption></figure>
+    <figure><img src="img/pp_padrinho.svg" data-still="img/pp_padrinho.png" alt=""><figcaption>Padrinhos do mastro<small>Batizam o mastro</small></figcaption></figure>
+  </div>
+  <img class="banner" src="img/cena-imperio.svg" data-still="img/cena-imperio.jpg" alt="Crianças do império com coroas, mantos vermelhos e cetros, ao lado de bandeireiras">
+  <p class="src keep" style="margin-top:8px">Ilustrações representam papéis da festa, não pessoas reais.</p>
+</section>
+
+<section id="mestras" class="wrap">
+  <div class="eyebrow">Capítulo 4</div>
+  <h2>Mapeamento de mestras</h2>
+  <p>Na festa do Divino, quem detém o saber são sobretudo mulheres: as caixeiras-régias. Os perfis abaixo trazem só o que está publicado em fontes que conferimos. Os retratos são ilustrações, não fotos, e podem ser trocados por fotos autorizadas. Onde falta informação, há uma marca amarela.</p>
+  <div class="filters" id="filters" role="group" aria-label="Filtrar por casa"></div>
+  <div class="people" id="people"></div>
+</section>
+
+<section id="mapa" class="wrap">
+  <div class="eyebrow">Mapeamento</div>
+  <h2>Mapa da festa em São Luís</h2>
+  <p>Onde a festa acontece e onde seu saber é guardado e ensinado. O detalhe mostra o Centro Histórico, onde ficam os terreiros mais antigos.</p>
+  <div class="stats">
+    <div><b>79</b><span>festas do Divino registradas em São Luís</span></div>
+    <div><b>61</b><span>delas em terreiros (51 de mina e 10 de umbanda)</span></div>
+    <div><b>120</b><span>terreiros de mina, aproximadamente; cerca de metade faz a festa</span></div>
+  </div>
+  
+  <div class="mapgrid">
+    <img src="img/mapa.jpg" alt="Mapa esquemático de São Luís com dez lugares da festa do Divino numerados e um detalhe do Centro Histórico" class="banner" style="margin-top:0">
+    <ol class="places"><li class="place"><span class="pn" style="background:var(--divino)">1</span><div><strong>Casa das Minas</strong><span class="where">Rua de São Pantaleão, Centro Histórico</span><p>Terreiro jeje com festa desde o fim do séc. XIX. Dona Celeste organizou a festa a partir de 1969; Dona Jacy foi caixeira-régia.</p><span class="src">Ferretti, 2005</span></div></li>
+<li class="place"><span class="pn" style="background:var(--divino)">2</span><div><strong>Casa de Nagô</strong><span class="where">Rua Cândido Ribeiro (Rua das Crioulas), Centro Histórico</span><p>Terreiro de mina com festa desde o início do séc. XX, em maio; mobiliza a Madre Deus e o Centro. Dona Luzia é caixeira-régia.</p><span class="src">O Imparcial, 2019 e 2026; Leal, 2018</span></div></li>
+<li class="place"><span class="pn" style="background:#7B4FA0">3</span><div><strong>Igreja de São Pantaleão</strong><span class="where">Centro Histórico</span><p>Recebe a missa do festejo do Divino da Casa de Nagô.</p><span class="src">O Imparcial, 2026</span></div></li>
+<li class="place"><span class="pn" style="background:var(--azulejo)">4</span><div><strong>Laborarte</strong><span class="where">Rua Jansen Müller, Centro</span><p>Laboratório de artes criado em 1972, com oficinas regulares de caixa. Dona Teté ensinou ali a partir de 1980.</p><span class="src">Leal, 2018</span></div></li>
+<li class="place"><span class="pn" style="background:var(--azulejo)">5</span><div><strong>Centro de Cultura Popular Domingos Vieira Filho</strong><span class="where">Rua do Giz, 221, Praia Grande</span><p>Guarda o cadastro das festas do Divino e um arquivo de convites.</p><span class="src">Leal, 2018</span></div></li>
+<li class="place"><span class="pn" style="background:var(--azulejo)">6</span><div><strong>Museu Casa de Nhozinho</strong><span class="where">Rua Portugal, Praia Grande</span><p>Cortejo do Divino só de mulheres caixeiras, com a Família Menezes (2024).</p><span class="src">O Imparcial, 2024</span></div></li>
+<li class="place"><span class="pn" style="background:var(--divino)">7</span><div><strong>Terreiro de Iemanjá</strong><span class="where">Fé em Deus</span><p>Casa de Pai Jorge Itaci; faz a festa e oficinas regulares de caixa.</p><span class="src">Leal, 2018; O Imparcial, 2018</span></div></li>
+<li class="place"><span class="pn" style="background:var(--divino)">8</span><div><strong>Casa Fanti-Ashanti</strong><span class="where">Cruzeiro do Anil</span><p>Terreiro de Pai Euclides com grupo próprio de caixeiras. A festa, ligada à de Oxalá em julho, foi interrompida em 2015.</p><span class="src">Mariano, 2020; Barbosa, 2004</span></div></li>
+<li class="place"><span class="pn" style="background:var(--azulejo)">9</span><div><strong>Centro de Cultura Negra</strong><span class="where">Rua dos Barés, João Paulo</span><p>Recebeu o Samba Divino Nagô (2019), em apoio à festa da Casa de Nagô.</p><span class="src">O Imparcial, 2019</span></div></li>
+<li class="place"><span class="pn" style="background:var(--ouro)">10</span><div><strong>Macaúba</strong><span class="where">Macaúba</span><p>Bairro onde nasceu a caixeira-régia Dona Jacy Gomes Serra.</p><span class="src">O Imparcial, 2015</span></div></li></ol>
+  </div>
+  <p class="note" style="margin-top:16px"><strong>Mapa esquemático, fora de escala.</strong> Há registro de festas também no Ilê Ashé Obá Izô (Pai Wender), no Jardim da Encantaria (Pai Clemente Filho) e no Terreiro Pedra Encantada (Pai José Itaparandi), sem endereço publicado. Confirme datas e horários com cada casa antes de visitar.</p>
+</section>
+
+<section id="glossario" class="wrap">
+  <div class="eyebrow">Capítulo 5</div>
+  <h2>Glossário da festa</h2>
+  <div class="search">
+    <label for="q" class="eyebrow" style="flex:none">Buscar</label>
+    <input id="q" type="search" placeholder="Digite um termo, por exemplo: mastro">
+    <span class="count" id="count"></span>
+  </div>
+  <div class="letters" id="letters" role="group" aria-label="Filtrar por letra" style="margin-bottom:16px"></div>
+  <dl class="gloss" id="gloss"></dl>
+</section>
+
+<section id="repertorio" class="wrap">
+  <div class="eyebrow">Capítulo 6</div>
+  <h2>Repertório musical</h2>
+  <p>Segundo Dona Celeste, da Casa das Minas, toda festa do Divino deve ter <strong>nove toques</strong>. Cada um tem seu momento no ritual. Além deles, cada grupo tem cantigas próprias e as caixeiras improvisam versos, os <em>repentes</em>.</p>
+  <img class="banner" src="img/cena-musica.svg" data-still="img/cena-musica.jpg" alt="Três caixas do Divino com notas musicais coloridas">
+  <ol class="toques" id="toques"></ol>
+
+  <div class="orq" id="orquestra">
+    <h3>Toque os instrumentos</h3>
+    <p class="orq-note">Toque cada instrumento ou ouça todos juntos. <strong>Os sons são criados no próprio navegador</strong>, porque não encontramos gravações de uso livre. Os ritmos são <strong>ilustrativos</strong>: não reproduzem nenhum dos toques tradicionais, que se aprendem com as caixeiras.</p>
+    <h4>Na festa: a caixa do Divino</h4>
+    <div class="pads"><button class="pad" type="button" data-inst="caixa" aria-keyshortcuts="A"><img src="img/sb_caixa.svg" data-still="img/sb_caixa.png" alt="" width="56" height="56"><span class="pl">Caixa: batida</span><kbd>A</kbd></button><button class="pad" type="button" data-inst="aro" aria-keyshortcuts="S"><img src="img/sb_caixa.svg" data-still="img/sb_caixa.png" alt="" width="56" height="56"><span class="pl">Caixa: aro</span><kbd>S</kbd></button><button class="pad" type="button" data-inst="rufo" aria-keyshortcuts="D"><img src="img/sb_caixa.svg" data-still="img/sb_caixa.png" alt="" width="56" height="56"><span class="pl">Caixa: rufo</span><kbd>D</kbd></button></div>
+    <h4>Depois do fechamento, em muitos terreiros: o toque de mina</h4>
+    <p class="orq-sub">Em muitas casas, depois do encerramento, há um toque de mina diante da tribuna, com tambores, ferro e cabaças.</p>
+    <div class="pads"><button class="pad" type="button" data-inst="grave" aria-keyshortcuts="F"><svg viewBox="0 0 60 60" width="56" height="56" aria-hidden="true"><circle cx="30" cy="30" r="29" fill="#B5121B"/><circle cx="30" cy="30" r="26" fill="none" stroke="#E0A83A" stroke-width="2"/><path d="M17,16 L43,16 L40,44 L20,44Z" fill="#8C0D14"/><ellipse cx="30" cy="16" rx="13" ry="3.5" fill="#FBEEDC" stroke="#E0A83A" stroke-width="1.5"/><path d="M19,22 L41,40 M41,22 L19,40" stroke="#E0A83A" stroke-width="1.5"/></svg><span class="pl">Tambor grave</span><kbd>F</kbd></button><button class="pad" type="button" data-inst="medio" aria-keyshortcuts="G"><svg viewBox="0 0 60 60" width="56" height="56" aria-hidden="true"><circle cx="30" cy="30" r="29" fill="#B5121B"/><circle cx="30" cy="30" r="26" fill="none" stroke="#E0A83A" stroke-width="2"/><path d="M20,18 L40,18 L37,42 L23,42Z" fill="#8C0D14"/><ellipse cx="30" cy="18" rx="10" ry="3.5" fill="#FBEEDC" stroke="#E0A83A" stroke-width="1.5"/><path d="M22,24 L38,38 M38,24 L22,38" stroke="#E0A83A" stroke-width="1.5"/></svg><span class="pl">Tambor médio</span><kbd>G</kbd></button><button class="pad" type="button" data-inst="agudo" aria-keyshortcuts="H"><svg viewBox="0 0 60 60" width="56" height="56" aria-hidden="true"><circle cx="30" cy="30" r="29" fill="#B5121B"/><circle cx="30" cy="30" r="26" fill="none" stroke="#E0A83A" stroke-width="2"/><path d="M22,20 L38,20 L35,40 L25,40Z" fill="#8C0D14"/><ellipse cx="30" cy="20" rx="8" ry="3.5" fill="#FBEEDC" stroke="#E0A83A" stroke-width="1.5"/><path d="M24,26 L36,36 M36,26 L24,36" stroke="#E0A83A" stroke-width="1.5"/></svg><span class="pl">Tambor agudo</span><kbd>H</kbd></button><button class="pad" type="button" data-inst="ferro" aria-keyshortcuts="J"><svg viewBox="0 0 60 60" width="56" height="56" aria-hidden="true"><circle cx="30" cy="30" r="29" fill="#B5121B"/><circle cx="30" cy="30" r="26" fill="none" stroke="#E0A83A" stroke-width="2"/><path d="M14,22 Q30,14 40,22 L46,38 Q30,46 20,38Z" fill="#F4D08A" stroke="#A8741C" stroke-width="1.5"/><path d="M40,22 L50,14" stroke="#FBEEDC" stroke-width="3" stroke-linecap="round"/></svg><span class="pl">Ferro</span><kbd>J</kbd></button><button class="pad" type="button" data-inst="cabaca" aria-keyshortcuts="K"><svg viewBox="0 0 60 60" width="56" height="56" aria-hidden="true"><circle cx="30" cy="30" r="29" fill="#B5121B"/><circle cx="30" cy="30" r="26" fill="none" stroke="#E0A83A" stroke-width="2"/><circle cx="30" cy="34" r="13" fill="#E0A83A"/><path d="M27,21 Q30,12 33,21" fill="#E0A83A"/><circle cx="40.0" cy="34.0" r="1.8" fill="#FBEEDC"/><circle cx="39.55336489125606" cy="36.955202066613396" r="1.8" fill="#FBEEDC"/><circle cx="38.25335614909678" cy="39.646424733950354" r="1.8" fill="#FBEEDC"/><circle cx="36.21609968270664" cy="41.83326909627483" r="1.8" fill="#FBEEDC"/><circle cx="33.62357754476674" cy="43.32039085967226" r="1.8" fill="#FBEEDC"/><circle cx="30.70737201667703" cy="43.97494986604055" r="1.8" fill="#FBEEDC"/><circle cx="27.72797905306913" cy="43.738476308781955" r="1.8" fill="#FBEEDC"/><circle cx="24.951538954001425" cy="42.632093666488736" r="1.8" fill="#FBEEDC"/><circle cx="22.626062844587544" cy="40.75463180551151" r="1.8" fill="#FBEEDC"/><circle cx="20.95927857982939" cy="38.273798802338305" r="1.8" fill="#FBEEDC"/><circle cx="20.100075033995545" cy="35.411200080598675" r="1.8" fill="#FBEEDC"/><circle cx="20.12520230091135" cy="32.42254305856752" r="1.8" fill="#FBEEDC"/><circle cx="21.03241583665853" cy="29.57479556705148" r="1.8" fill="#FBEEDC"/><circle cx="22.7406769579986" cy="27.12233840816026" r="1.8" fill="#FBEEDC"/><circle cx="25.097391786593008" cy="25.284242275864116" r="1.8" fill="#FBEEDC"/><circle cx="27.892042005692204" cy="24.22469882334903" r="1.8" fill="#FBEEDC"/><circle cx="30.874989834394462" cy="24.038353911641593" r="1.8" fill="#FBEEDC"/><circle cx="33.7797774271298" cy="24.741853176722675" r="1.8" fill="#FBEEDC"/><circle cx="36.34692875942634" cy="26.272355124440125" r="1.8" fill="#FBEEDC"/><circle cx="38.347127848391594" cy="28.493144574023624" r="1.8" fill="#FBEEDC"/><circle cx="39.60170286650366" cy="31.20584501801074" r="1.8" fill="#FBEEDC"/></svg><span class="pl">Cabaça</span><kbd>K</kbd></button></div>
+    <div class="orq-ctrl">
+      <button class="btn" type="button" data-mix="caixas">Tocar as caixas juntas</button>
+      <button class="btn" type="button" data-mix="mina">Tocar o toque de mina</button>
+      <button class="btn primary" type="button" data-mix="todos">Tocar todos os instrumentos</button>
+      <label class="tempo">Andamento <input type="range" id="tempo" min="70" max="140" value="100" aria-label="Andamento"> <output id="tempov">100</output></label>
+    </div>
+    <div class="steps16" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <p class="src keep">Sons sintetizados para esta cartilha.</p>
+  </div>
+
+  <div class="cols">
+    <div class="box">
+      <h3>Outra lista, outro grupo</h3>
+      <p style="font-size:16px">As Caixeiras do Divino de Pindaré-Mirim citam como toques obrigatórios: Espírito Santo dobrado, Alvorada, Alvoradinha, Santana, Nossa Senhora da Guia, Hino da missa, Dança das caixeiras e Repasse das posses. O repertório de São Luís também inclui cantigas trazidas de festas do interior.</p>
+      <p class="src">O Imparcial, 2020</p>
+    </div>
+  </div>
+</section>
+
+<section id="fontes" class="wrap">
+  <div class="eyebrow">Referências</div>
+  <h2>Fontes</h2>
+  <ol class="refs">
+    <li>FERRETTI, Sergio F. Festa do Divino no Maranhão. In: <em>Divino Toque do Maranhão</em> (catálogo de exposição). Rio de Janeiro: Centro Nacional de Folclore e Cultura Popular / IPHAN, 2005, p. 9–29. <a href="https://www.gpmina.ufma.br/arquivos/Festa%20do%20Divino%20no%20Maranhao.pdf" target="_blank" rel="noopener">PDF no GP Mina / UFMA</a></li>
+    <li>LEAL, João. Religião como cultura? As festas do Divino, o tambor de mina e o regime patrimonial. <em>Revista Pós Ciências Sociais</em> (UFMA), v. 15, n. 30, 2018. <a href="https://www.periodicoseletronicos.ufma.br/index.php/rpcsoc/article/download/9684/5624/29094" target="_blank" rel="noopener">Artigo</a></li>
+    <li>BARBOSA, Marise. Divino no Maranhão: o particular de uma festa popular e seus diálogos. <em>Projeto História</em> (PUC-SP), v. 28, 2004. <a href="https://revistas.pucsp.br/index.php/revph/article/view/10422" target="_blank" rel="noopener">Artigo</a></li>
+    <li>DOMINGUES, Lysandra. <em>“Eu vou cumprindo a minha sorte”: uma etnografia das caixeiras de São Luís do Maranhão</em>. Tese (Doutorado em Antropologia), Universidade Nova de Lisboa, 2020. <a href="https://run.unl.pt/handle/10362/126390" target="_blank" rel="noopener">Repositório</a></li>
+    <li>CORREA, Antenor F.; BARBOSA, Marise G. Female Empowerment: a case study in the State of Maranhão, Brazil. <em>Per Musi</em>, n. 39, 2019. <a href="https://periodicos-hml.cecom.ufmg.br/index.php/permusi/article/view/5300" target="_blank" rel="noopener">Artigo</a></li>
+    <li>BRITO, Viviane M. de. Divina tradição tocada pelas caixeiras no Rio de Janeiro. Anais, Revista Plura. <a href="https://revistaplura.emnuvens.com.br/anais/article/view/487/468" target="_blank" rel="noopener">Texto</a></li>
+    <li>O IMPARCIAL. Dona Jacy Gomes Serra realiza oficina de formação de caixeiras no Laborarte, maio de 2015. <a href="https://oimparcial.com.br/entretenimento-e-cultura/2015/05/dona-jacy-gomes-serra-realiza-oficina-de-formacao-de-caxeiras-no-laborarte/" target="_blank" rel="noopener">Matéria</a></li>
+    <li>O IMPARCIAL. Caixeiras do Divino fazem vaquinha virtual, setembro de 2020. <a href="https://oimparcial.com.br/entretenimento-e-cultura/2020/09/caixeiras-do-divino-fazem-vaquinha-virtual/" target="_blank" rel="noopener">Matéria</a></li>
+    <li>MARIANO, Neusa de Fátima. A Festa do Divino Espírito Santo: uma tradição em movimento. <em>PatryTer</em>, v. 3, n. 5, 2020. <a href="https://www.redalyc.org/journal/6040/604063281012/604063281012.pdf" target="_blank" rel="noopener">Artigo</a></li>
+    <li>O IMPARCIAL. Samba Divino para Casa de Nagô, abril de 2019. <a href="https://oimparcial.com.br/entretenimento-e-cultura/2019/04/samba-divino-para-casa-de-nago/" target="_blank" rel="noopener">Matéria</a></li>
+    <li>O IMPARCIAL. Casa de Nagô une tradição e justiça climática no festejo do Divino Espírito Santo 2026, maio de 2026. <a href="https://oimparcial.com.br/noticias/2026/05/casa-de-nago-une-tradicao-e-justica-climatica-no-festejo-do-divino-espirito-santo-2026/" target="_blank" rel="noopener">Matéria</a></li>
+    <li>O IMPARCIAL. Terreiro de Yemanjá é tema de exposição em São Luís, novembro de 2018. <a href="https://oimparcial.com.br/entretenimento-e-cultura/2018/11/terreiro-de-yemanja-e-tema-de-exposicao-em-sao-luis/" target="_blank" rel="noopener">Matéria</a></li>
+    <li>TURISMO SÃO LUÍS. Casa de Matriz Africana. <a href="https://turismosaoluis.com.br/en/experiences/casa-de-matriz-africana/" target="_blank" rel="noopener">Página</a></li>
+    <li>WIKIPEDIA. Casa das Minas. <a href="https://en.wikipedia.org/wiki/Casa_das_Minas" target="_blank" rel="noopener">Verbete</a></li>
+    <li>O IMPARCIAL. Cortejo só de mulheres é realizado em louvor ao Divino Espírito Santo em São Luís, julho de 2024. <a href="https://oimparcial.com.br/noticias/2024/07/cortejo-so-de-mulheres-e-realizado-em-louvor-ao-divino-espirito-santo-em-sao-luis/" target="_blank" rel="noopener">Matéria</a></li>
+  </ol>
+</section>
+</main>
+
+<footer class="wrap">Cartilha produzida para o projeto de aniversário de São Luís. Conteúdo baseado nas fontes listadas; perfis de pessoas trazem apenas dados publicados.</footer>
+
+<script>
+const STILL=matchMedia("(prefers-reduced-motion: reduce)").matches,IMX=STILL?".png":".svg";
+if(STILL)document.querySelectorAll("img[data-still]").forEach(im=>im.src=im.dataset.still);
+
+(function(){
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- Ciclo ritual ---------- */
+const STEPS=[
+ {t:"Abertura da tribuna",w:"Domingo de Páscoa ou Pascoela",d:"Ritual quase privado que abre o tempo da festa. A tribuna é o altar enfeitado com os símbolos do Divino.",k:"O que se abre no começo será fechado, com o mesmo cuidado, no encerramento."},
+ {t:"Buscamento do mastro",w:"Um domingo antes da festa",d:"Os homens vão buscar o tronco que servirá de mastro, em clima de folguedo, acompanhados pelas caixeiras.",k:"Toques de caixa acompanham o cortejo do mastro."},
+ {t:"Levantamento do mastro",w:"À noite, abrindo a festa",d:"Com ladainha, batismo do mastro e padrinhos, o mastro enfeitado é erguido. Marca o início oficial da festa.",k:"Toque de Nossa Senhora da Guia (levantamento do mastro)."},
+ {t:"Alvoradas",w:"Amanhecer, meio-dia e anoitecer",d:"Salvas de caixas saúdam o Divino nas horas marcadas dos dias de festa.",k:"Toque da Alvorada, que continua com o da Alvoradinha."},
+ {t:"Visitas",w:"Durante o ciclo da festa",d:"O império e as caixeiras fazem duas ou três visitas às casas dos mordomos e das crianças do império.",k:"As caixeiras tocam e cantam nas casas visitadas."},
+ {t:"Missa e cortejo",w:"Manhã do dia da festa",d:"Depois da missa, um cortejo solene leva o império de volta ao terreiro, com as caixeiras à frente.",k:"Toque do hino da Missa."},
+ {t:"Mesas de doces",w:"Dia da festa",d:"Cada membro do império oferece uma mesa de doces, partilhada com quem está na festa.",k:"A festa segue com toques e cantos das caixeiras."},
+ {t:"Derrubamento do mastro",w:"Início da noite do segundo dia",d:"Com toques de caixa e a presença do império, o mastro é derrubado.",k:"Toque de Nossa Senhora da Guia (derrubada do mastro)."},
+ {t:"Entrega das posses",w:"Diante da tribuna",d:"As caixeiras se reúnem diante da tribuna e o império passa as posses (coroas, cetros, trajes) para os imperadores e mordomos do ano seguinte.",k:"Toques de repasse das posses."},
+ {t:"Fechamento da tribuna",w:"Encerramento",d:"A festa termina com as caixas arriadas ao chão diante da tribuna.",k:"Toque do fechamento, com o Bendito de Hortelã."},
+ {t:"Serramento do mastro e carimbó",w:"Segunda ou terça-feira seguinte",d:"O mastro é serrado num clima de brincadeira, já fora do rito solene.",k:"Carimbó de velha, também chamado carimbó das caixeiras."}
+];
+const ICONS=["ic_abertura", "ic_buscamento", "ic_levantamento", "ic_alvorada", "ic_visitas", "ic_missa", "ic_doces", "ic_derrubamento", "ic_posses", "ic_fechamento", "ic_serramento"];
+let cur=0;
+const stepsEl=$("#steps"), card=$("#stepcard");
+stepsEl.innerHTML=STEPS.map((s,i)=>`<li><button role="tab" id="st${i}" aria-selected="false" data-i="${i}"><span class="n">${i+1}</span>${esc(s.t)}</button></li>`).join("");
+function showStep(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  stepsEl.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",String(+b.dataset.i===cur)));
+  const s=STEPS[cur];
+  card.innerHTML=`<img src="img/${ICONS[cur]}${IMX}" alt=""><div class="eyebrow">Etapa ${cur+1} de ${STEPS.length}</div><h3 style="font-family:var(--display);font-weight:400;font-size:28px;color:var(--divino);margin:4px 0">${esc(s.t)}</h3><div class="when">${esc(s.w)}</div><p style="margin-top:10px">${esc(s.d)}</p><div class="toque"><strong>Na caixa:</strong> ${esc(s.k)}</div><p class="src" style="margin-top:10px">Ferretti, 2005; Leal, 2018</p><div class="stepnav"><button class="btn" type="button" data-go="-1">← Anterior</button><button class="btn primary" type="button" data-go="1">Próxima →</button></div>`;
+}
+stepsEl.addEventListener("click",e=>{const b=e.target.closest("button");if(b)showStep(+b.dataset.i)});
+card.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)showStep(cur+ +b.dataset.go)});
+showStep(0);
+
+/* ---------- Mestras ---------- */
+const PEOPLE=[
+ {n:"Dona Maria Celeste Santos",r:"Caixeira-régia e festeira",h:"Casa das Minas",tag:"Casa das Minas",
+  f:["Vodunsi (filha de santo) da Casa das Minas desde 1950.","Organizou a festa do Divino da casa a partir de 1969.","Definiu os nove toques que toda festa deve ter.","Tia e madrinha de Dona Jacy Gomes Serra. Já falecida em 2015."],
+  g:"Datas de nascimento e falecimento.",s:"Ferretti, 2005; O Imparcial, 2015"},
+ {n:"Dona Jacy Gomes Serra",r:"Caixeira-régia",h:"Casa das Minas e outras 32 casas (2015)",tag:"Casa das Minas",
+  f:["Nascida no bairro da Macaúba. Tinha 72 anos em 2015.","Caixeira-régia havia 40 anos, 36 deles na Casa das Minas.","Herdou a função da avó e da mãe; em 2015 uma filha de 17 anos estudava o ofício.","Ministrou a oficina “No Bater da Minha Caixa” no Laborarte (2015).","Uma das três caixeiras que guiaram a pesquisa de Lysandra Domingues."],
+  g:"Confirmar a grafia do nome (Jacy ou Jaci) e a situação atual.",s:"O Imparcial, 2015; Leal, 2018; Domingues, 2020"},
+ {n:"Dona Luzia",r:"Caixeira-régia",h:"Casa de Nagô e mais de 30 festas",tag:"Casa de Nagô",
+  f:["Caixeira-régia da Casa de Nagô e de mais de três dezenas de festas.","Uma das três caixeiras que guiaram a pesquisa de Lysandra Domingues.","Lembra que antigamente as caixeiras moravam perto das festas."],
+  g:"Nome completo, idade, com quem aprendeu.",s:"Domingues, 2020; Leal, 2018"},
+ {n:"Dona Rosa (in memoriam)",r:"Caixeira-régia",h:"Casa não informada",tag:"Outras",
+  f:["Uma das três caixeiras-régias que guiaram a pesquisa de Lysandra Domingues, no posto mais alto da hierarquia do seu grupo."],
+  g:"Nome completo, casa, trajetória e datas.",s:"Domingues, 2020"},
+ {n:"Dona Kabeca",r:"Caixeira-régia e mãe de santo",h:"Casa Fanti-Ashanti",tag:"Fanti-Ashanti",
+  f:["Dirigiu o grupo de caixeiras da Casa Fanti-Ashanti até 2014.","Depois tornou-se mãe de santo do terreiro."],
+  g:"Nome civil, idade, trajetória como caixeira.",s:"Leal, 2018"},
+ {n:"Família Menezes",r:"Caixeiras",h:"Casa Fanti-Ashanti; Museu Casa de Nhozinho",tag:"Fanti-Ashanti",
+  f:["Irmãs Anunciação de Maria Reis de Menezes (Dindinha), Maria José Reis de Menezes (Dona Zezé) e Maria da Graça Reis de Menezes (Graça).","Bartira Helena Reis de Menezes, filha de Anunciação, segue a tradição.","Aprenderam ouvindo os pais, José Maria e Francisca de Menezes, cantarem à noite.","Estudadas por Marise Barbosa como caixeiras da Casa Fanti-Ashanti.","Em 2024 conduziram o primeiro cortejo com toque só de mulheres, no Museu Casa de Nhozinho."],
+  g:"Datas de nascimento e qual delas é a caixeira-régia hoje.",s:"Barbosa, 2004; O Imparcial, 2024"},
+ {n:"Dona Teté",r:"Caixeira e rezadeira",h:"Laborarte",tag:"Laborarte",
+  f:["Começou a trabalhar com o Laborarte em 1980, ensinando o toque de caixa para um espetáculo.","Criou em 1986 um grupo de cacuriá, dança ligada ao carimbó das caixeiras.","Já falecida."],
+  g:"Nome civil, datas e casas onde tocou.",s:"Leal, 2018"},
+ {n:"Rosa Reis",r:"Artista e tocadora de caixa",h:"Laborarte; Casa das Minas",tag:"Laborarte",
+  f:["Diretora do Laborarte (em 2018).","Toca caixa na festa do Divino da Casa das Minas."],
+  g:"Trajetória de aprendizado e com quem aprendeu.",s:"Leal, 2018"},
+ {n:"Deuzima Serra",r:"Integrante do Laborarte",h:"Laborarte",tag:"Laborarte",
+  f:["Filha da caixeira Cecé.","Em 2015 destacou o legado das caixeiras para a cultura popular."],
+  g:"Dados sobre a mãe, Cecé, e se Deuzima toca caixa.",s:"O Imparcial, 2015"}
+];
+const PORT={"Dona Maria Celeste Santos": "mt_celeste", "Dona Jacy Gomes Serra": "mt_jacy", "Dona Luzia": "mt_luzia", "Dona Rosa (in memoriam)": "mt_rosa", "Dona Kabeca": "mt_kabeca", "Família Menezes": "mt_menezes", "Dona Teté": "mt_tete", "Rosa Reis": "mt_rosareis", "Deuzima Serra": "mt_deuzima"};
+const TAGS=["Todas",...new Set(PEOPLE.map(p=>p.tag))];
+let tag="Todas";
+const filters=$("#filters"), people=$("#people");
+filters.innerHTML=TAGS.map(t=>`<button type="button" aria-pressed="${t===tag}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+function renderPeople(){
+  filters.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.t===tag)));
+  people.innerHTML=PEOPLE.filter(p=>tag==="Todas"||p.tag===tag).map(p=>`<article class="person"><div class="ptop"><img class="pt" src="img/${PORT[p.n]}${IMX}" alt="Ilustração de ${esc(p.n)}"><div><div class="role">${esc(p.r)}</div><h3>${esc(p.n)}</h3><div class="house">${esc(p.h)}</div></div></div><ul>${p.f.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><div class="src">Fonte: ${esc(p.s)}</div></article>`).join("");
+}
+filters.addEventListener("click",e=>{const b=e.target.closest("button");if(b){tag=b.dataset.t;renderPeople()}});
+renderPeople();
+
+/* ---------- Glossário ---------- */
+const G=[
+ ["Abertura da tribuna","Ritual quase privado que abre o ciclo da festa, em geral no Domingo de Páscoa ou na Pascoela.","Ferretti, 2005"],
+ ["Alvorada","Salva de caixas ao amanhecer, ao meio-dia e ao anoitecer nos dias de festa. Continua com a Alvoradinha.","Ferretti, 2005"],
+ ["Bancados","Cargos da festa patrocinados e pagos por adultos, geralmente pais ou parentes das crianças do império.","Leal, 2018"],
+ ["Bandeireira","Menina que segura a bandeira do Divino e dança com as caixeiras diante do trono e do mastro.","Ferretti, 2005"],
+ ["Bendito de Hortelã","Cântico do fechamento da tribuna, que encerra a festa.","Ferretti, 2005"],
+ ["Buscamento do mastro","Ida, em cortejo festivo e masculino, para buscar o tronco do mastro, com acompanhamento das caixeiras.","Ferretti, 2005; Leal, 2018"],
+ ["Caixa","Tambor tocado pelas caixeiras, semelhante à caixa militar.","Domingues, 2020"],
+ ["Caixeira","Mulher que toca a caixa e canta os louvores do Divino. Atua por promessa e devoção.","Ferretti, 2005"],
+ ["Caixeira-mor","Auxiliar da caixeira-régia, que a substitui em caso de imprevisto.","Ferretti, 2005; Domingues, 2020"],
+ ["Caixeira-régia","Líder do grupo de caixeiras. Conhece todos os cânticos e conduz todas as etapas do ritual.","Ferretti, 2005; Domingues, 2020"],
+ ["Carimbó de velha","Momento de brincadeira no serramento do mastro, depois do encerramento. Também chamado carimbó das caixeiras.","Ferretti, 2005; Leal, 2018"],
+ ["Derrubamento do mastro","Derrubada do mastro no início da noite do segundo dia de festa, com toques de caixa e presença do império.","Ferretti, 2005"],
+ ["Entrega das posses","Passagem dos trajes e insígnias do império para as crianças que serão imperadores e mordomos no ano seguinte.","Ferretti, 2005"],
+ ["Fechamento da tribuna","Ritual que encerra a festa, com as caixas arriadas ao chão diante do altar.","Ferretti, 2005"],
+ ["Folia","Nome geral dos grupos musicais ligados às festas do Divino no Brasil.","Leal, 2018"],
+ ["Imperador e imperatriz","Casal de crianças que ocupa o posto mais alto do império.","Ferretti, 2005"],
+ ["Império","Corte de crianças e pré-adolescentes, com trajes de época, que representa a realeza na festa.","Ferretti, 2005; Leal, 2018"],
+ ["Levantamento do mastro","Erguimento noturno do mastro, com ladainha, batismo e padrinhos. Abre a festa.","Ferretti, 2005"],
+ ["Mastro","Tronco enfeitado que simboliza o Espírito Santo e marca o lugar e o tempo da festa.","Leal, 2018"],
+ ["Mesa de doces","Mesa oferecida por cada membro do império no dia da festa.","Ferretti, 2005"],
+ ["Mordomo-mor e mordomo régio","Cargos do império logo abaixo do casal de imperadores.","Ferretti, 2005"],
+ ["Padrinhos do mastro","Pessoas que apadrinham o mastro no seu batismo e levantamento.","Ferretti, 2005"],
+ ["Posses","Trajes e adereços cerimoniais repassados a cada ano entre as crianças dos impérios.","Leal, 2018"],
+ ["Repente","Verso improvisado pelas caixeiras durante os toques.","O Imparcial, 2015"],
+ ["Serramento do mastro","Corte do mastro na segunda ou terça-feira após a festa, ao som do carimbó de velha.","Ferretti, 2005"],
+ ["Tambor de mina","Religião afro-maranhense. Em São Luís, quase todos os terreiros incluem a festa do Divino no seu calendário.","Ferretti, 2005"],
+ ["Toque","Peça musical das caixas ligada a um momento do ritual. No terreiro, também nomeia a sessão de tambor de mina.","Ferretti, 2005; Leal, 2018"],
+ ["Tribuna","Altar ricamente decorado onde ficam os símbolos do Divino e onde se concentra parte importante da festa.","Leal, 2018"],
+ ["Visitas","Saídas do império e das caixeiras às casas dos mordomos e das crianças do império.","Ferretti, 2005"],
+ ["Vodunsi","Filha de santo iniciada nos terreiros jeje, como a Casa das Minas.","Ferretti, 2005"]
+];
+const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+let letter="";
+const lettersEl=$("#letters");
+const LET=[...new Set(G.map(x=>norm(x[0])[0].toUpperCase()))].sort();
+lettersEl.innerHTML=["Todas",...LET].map(l=>`<button type="button" data-l="${l==="Todas"?"":l}" aria-pressed="${l==="Todas"}" style="${l==="Todas"?"width:auto;padding:0 10px":""}">${l}</button>`).join("");
+function renderGloss(){
+  const q=norm($("#q").value.trim());
+  const list=G.filter(([t,d])=>(!letter||norm(t)[0].toUpperCase()===letter)&&(!q||norm(t+" "+d).includes(q)));
+  $("#gloss").innerHTML=list.map(([t,d,s])=>`<div class="term"><dt>${esc(t)}</dt><dd>${esc(d)}<span class="src">${esc(s)}</span></dd></div>`).join("")||`<p>Nenhum termo encontrado. Tente outra palavra ou volte para “Todas”.</p>`;
+  $("#count").textContent=`${list.length} de ${G.length} termos`;
+  lettersEl.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.l===letter)));
+}
+$("#q").addEventListener("input",renderGloss);
+lettersEl.addEventListener("click",e=>{const b=e.target.closest("button");if(b){letter=b.dataset.l;renderGloss()}});
+renderGloss();
+
+/* ---------- Repertório ---------- */
+const T=[
+ ["Espírito Santo Dobrado","Toque dedicado ao Divino Espírito Santo, na forma dobrada."],
+ ["Espírito Santo Singelo","Toque dedicado ao Divino Espírito Santo, na forma singela."],
+ ["Senhora Santana","Toque em louvor a Sant’Ana."],
+ ["Nossa Senhora da Guia","Acompanha o levantamento e a derrubada do mastro."],
+ ["Hino da Missa","Toque da missa e do cortejo do dia da festa."],
+ ["Alvorada e Alvoradinha","Salvas ao amanhecer, ao meio-dia e ao anoitecer. A Alvorada continua com a Alvoradinha."],
+ ["Dança das caixeiras","Toque em que as caixeiras dançam com as bandeireiras diante do trono e do mastro."],
+ ["Rezas e ladainha nas caixas","Acompanhamento das rezas e da ladainha, como no batismo do mastro."],
+ ["Fechamento da tribuna","Encerra a festa com o Bendito de Hortelã e as caixas arriadas ao chão."]
+];
+$("#toques").innerHTML=T.map(([t,d],i)=>`<li><details${i===0?" open":""}><summary><span class="n">${i+1}</span>${esc(t)}</summary><p>${esc(d)} <span class="src">Fonte: Dona Celeste, em Ferretti, 2005.</span></p></details></li>`).join("");
+
+/* ---------- Orquestra do Divino (sons sintetizados) ---------- */
+let actx=null,master=null,noiseBuf=null;
+function ctx(){
+  if(!actx){
+    actx=new (window.AudioContext||window.webkitAudioContext)();
+    master=actx.createDynamicsCompressor();master.connect(actx.destination);
+    noiseBuf=actx.createBuffer(1,actx.sampleRate,actx.sampleRate);const d=noiseBuf.getChannelData(0);for(let k=0;k<d.length;k++)d[k]=Math.random()*2-1;
+  }
+  if(actx.state==="suspended")actx.resume();
+  return actx;
+}
+function env(t,peak,dec,att=0.002){const g=actx.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(peak,t+att);g.gain.exponentialRampToValueAtTime(0.0001,t+dec);return g}
+function noise(t,dur,type,freq,q,peak,dec){const s=actx.createBufferSource();s.buffer=noiseBuf;const f=actx.createBiquadFilter();f.type=type;f.frequency.value=freq;f.Q.value=q;const g=env(t,peak,dec);s.connect(f).connect(g).connect(master);s.start(t,Math.random()*0.5,dur)}
+function tone(t,type,f0,f1,peak,dec){const o=actx.createOscillator();o.type=type;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dec);const g=env(t,peak,dec);o.connect(g).connect(master);o.start(t);o.stop(t+dec+0.05)}
+const INST={
+  caixa:(t,v=1)=>{noise(t,0.25,"bandpass",2200,0.7,0.9*v,0.2);noise(t,0.25,"highpass",5000,0.5,0.35*v,0.16);tone(t,"triangle",200,140,0.6*v,0.12)},
+  aro:(t,v=1)=>{tone(t,"square",1500,1200,0.18*v,0.035);noise(t,0.06,"highpass",3500,0.7,0.5*v,0.045)},
+  rufo:(t,v=1)=>{for(let k=0;k<14;k++)INST.caixa(t+k*0.035,v*(0.25+k/22))},
+  grave:(t,v=1)=>{tone(t,"sine",95,58,1.0*v,0.55);noise(t,0.05,"lowpass",900,0.7,0.25*v,0.05)},
+  medio:(t,v=1)=>{tone(t,"sine",150,112,0.85*v,0.38);noise(t,0.05,"bandpass",1200,0.9,0.22*v,0.05)},
+  agudo:(t,v=1)=>{tone(t,"sine",245,195,0.7*v,0.26);noise(t,0.04,"bandpass",1800,1,0.22*v,0.04)},
+  ferro:(t,v=1)=>{[1046,1597,2489].forEach((f,i)=>tone(t,i?"sine":"triangle",f,f*0.995,(i?0.12:0.22)*v,0.32-i*0.07))},
+  cabaca:(t,v=1)=>{noise(t,0.12,"bandpass",6500,1.2,0.45*v,0.07);noise(t+0.03,0.1,"bandpass",5200,1.2,0.25*v,0.06)}
+};
+const padEl={};document.querySelectorAll(".pad").forEach(b=>padEl[b.dataset.inst]=b);
+function flash(k,when){const el=padEl[k];if(!el)return;const ms=Math.max(0,(when-actx.currentTime)*1000);setTimeout(()=>{el.classList.add("hit");setTimeout(()=>el.classList.remove("hit"),110)},ms)}
+function play(k,t,v){INST[k](t,v);flash(k,t)}
+document.querySelectorAll(".pad").forEach(b=>b.addEventListener("click",()=>{try{ctx();play(b.dataset.inst,actx.currentTime+0.01,1)}catch(e){}}));
+const KEYS={a:"caixa",s:"aro",d:"rufo",f:"grave",g:"medio",h:"agudo",j:"ferro",k:"cabaca"};
+document.addEventListener("keydown",e=>{if(e.repeat||e.metaKey||e.ctrlKey||e.altKey)return;const tg=e.target.tagName;if(tg==="INPUT"||tg==="TEXTAREA")return;const k=KEYS[e.key.toLowerCase()];if(!k||!document.getElementById("orquestra"))return;const r=document.getElementById("orquestra").getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;try{ctx();play(k,actx.currentTime+0.01,1)}catch(_){}});
+// padrões de 16 passos (ritmos ilustrativos); valor = intensidade
+const PAT={
+  caixa: [1,0,.35,0,.8,0,.35,.3,1,0,.35,0,.8,0,.35,.3],
+  aro:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  rufo:  [0,0,0,0,0,0,0,0,0,0,0,0,.7,0,0,0],
+  grave: [1,0,0,0,0,0,.8,0,0,0,1,0,0,0,0,0],
+  medio: [0,0,0,.8,0,0,0,0,.8,0,0,.7,0,0,.8,0],
+  agudo: [0,0,.7,0,0,.7,0,.6,0,0,.7,0,0,.7,0,.6],
+  ferro: [1,0,.7,0,.7,0,0,.7,0,.7,0,.7,0,0,.7,0],
+  cabaca:[.6,0,.35,0,.6,0,.35,0,.6,0,.35,0,.6,0,.35,0]
+};
+PAT.aro=PAT.caixa.map((v,i)=>i%8===6?.9:0);
+const MIX={caixas:["caixa","aro","rufo"],mina:["grave","medio","agudo","ferro","cabaca"],todos:Object.keys(PAT)};
+let mix=null,step=0,nextT=0,sched=null,bar=0;
+const lights=[...document.querySelectorAll(".steps16 span")],mixBtns=[...document.querySelectorAll("[data-mix]")];
+const LABEL={caixas:"Tocar as caixas juntas",mina:"Tocar o toque de mina",todos:"Tocar todos os instrumentos"};
+const tempoEl=document.getElementById("tempo"),tempoV=document.getElementById("tempov");
+tempoEl.addEventListener("input",()=>tempoV.textContent=tempoEl.value);
+function tick(){
+  const spb=60/(+tempoEl.value)/4;
+  while(nextT<actx.currentTime+0.12){
+    MIX[mix].forEach(k=>{let v=PAT[k][step];if(k==="rufo"&&bar%2===0)v=0;if(v)play(k,nextT,v)});
+    const s=step,ms=Math.max(0,(nextT-actx.currentTime)*1000);setTimeout(()=>lights.forEach((l,i)=>l.classList.toggle("on",i===s)),ms);
+    nextT+=spb;step=(step+1)%16;if(step===0)bar++;
+  }
+}
+function stop(){clearInterval(sched);sched=null;mix=null;lights.forEach(l=>l.classList.remove("on"));mixBtns.forEach(b=>{b.setAttribute("aria-pressed","false");b.textContent=LABEL[b.dataset.mix]})}
+mixBtns.forEach(b=>{b.setAttribute("aria-pressed","false");b.addEventListener("click",()=>{
+  const m=b.dataset.mix;const was=mix;stop();if(was===m)return;
+  try{ctx()}catch(e){return}
+  mix=m;step=0;bar=0;nextT=actx.currentTime+0.06;b.setAttribute("aria-pressed","true");b.textContent="Parar";sched=setInterval(tick,25);tick();
+})});
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&sched)stop()});
+
+/* ---------- Caixeiras animadas, no ritmo do som ---------- */
+const cxw=[...document.querySelectorAll("#cxanim .cxw")],cxBtn=document.getElementById("cxplay"),cxWrap=document.getElementById("cxwrap");
+const reduceMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let cxSched=null,cxStep=0,cxNext=0;
+function strike(t,right,v,ms){
+  const delay=ms!=null?ms:Math.max(0,(t-actx.currentTime)*1000-150),lift=(right?50:-50)*(0.55+v*0.45),past=right?-4:4;
+  cxw.forEach((w,i)=>{
+    const el=w.querySelector(right?".stk-r":".stk-l");
+    if(el&&el.animate&&!reduceMotion)el.animate([{transform:"rotate(0deg)"},{transform:`rotate(${lift}deg)`,offset:.36},{transform:`rotate(${past}deg)`,offset:.56},{transform:"rotate(0deg)"}],{duration:270,delay:delay+i*6,easing:"ease-out"});
+    if(v>=0.8&&!reduceMotion){const h=w.querySelector(".cab");if(h&&h.animate)h.animate([{transform:"rotate(0deg)"},{transform:`rotate(${i%2?2.5:-2.5}deg)`},{transform:"rotate(0deg)"}],{duration:380,delay:delay+60})}
+  });
+}
+const CXPAT=[1,0,.4,0,.8,0,.4,.35,1,0,.4,0,.8,.3,.4,.35];
+function cxTick(){
+  const spb=60/(+tempoEl.value)/4;
+  while(cxNext<actx.currentTime+0.15){
+    const v=CXPAT[cxStep];
+    if(v){INST.caixa(cxNext,v*0.75);INST.caixa(cxNext+0.012,v*0.35);strike(cxNext,cxStep%2===1,v)}
+    cxNext+=spb;cxStep=(cxStep+1)%16;
+  }
+}
+function stopCx(){clearInterval(cxSched);cxSched=null;cxBtn.setAttribute("aria-pressed","false");cxBtn.textContent="Ouvir as caixeiras";startSilent()}
+/* sem som: as caixeiras tocam sozinhas, só com movimento */
+let silentT=null,silentStep=0,cxVisible=true;
+function startSilent(){
+  if(silentT||reduceMotion)return;
+  cxWrap.classList.add("playing");
+  const run=()=>{if(cxSched||!cxVisible)return;const v=CXPAT[silentStep];if(v)strike(0,silentStep%2===1,v,0);silentStep=(silentStep+1)%16};
+  const loop=()=>{clearInterval(silentT);silentT=setInterval(run,60000/(+tempoEl.value)/4)};
+  loop();tempoEl.addEventListener("input",()=>{if(silentT)loop()});
+}
+if("IntersectionObserver" in window)new IntersectionObserver(es=>es.forEach(e=>cxVisible=e.isIntersecting)).observe(cxWrap);
+cxBtn.addEventListener("click",()=>{
+  if(cxSched){stopCx();return}
+  try{ctx()}catch(e){return}
+  if(typeof stop==="function"&&mix)stop();
+  cxStep=0;cxNext=actx.currentTime+0.2;cxWrap.classList.add("playing");cxBtn.setAttribute("aria-pressed","true");cxBtn.textContent="Desligar o som";
+  cxSched=setInterval(cxTick,25);cxTick();
+});
+mixBtns.forEach(b=>b.addEventListener("click",()=>{if(cxSched)stopCx()}));
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&cxSched)stopCx()});
+startSilent();
+
+/* ---------- Navegação ativa ---------- */
+const links=[...document.querySelectorAll("nav.toc a")];
+const secs=links.map(a=>document.querySelector(a.getAttribute("href")));
+if("IntersectionObserver" in window){
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+en.target.id))}})},{rootMargin:"-40% 0px -55% 0px"});
+  secs.forEach(s=>s&&io.observe(s));
+}
+})();
+</script>
