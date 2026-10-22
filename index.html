@@ -210,6 +210,15 @@ dl.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 .todo label{display:flex;gap:10px;align-items:flex-start;font-size:17px;cursor:pointer}
 .todo input{margin-top:6px;accent-color:var(--divino);width:18px;height:18px;flex:none}
 ol.refs{padding-left:22px;font-size:16px;max-width:80ch}
+.tbl-wrap{overflow-x:auto;margin-top:16px}
+.tbl{width:100%;border-collapse:collapse;font-size:16px}
+.tbl th{font-family:var(--ui);text-align:left;background:var(--divino);color:#FBEEDC;padding:10px 12px}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl td:first-child{font-family:var(--ui);font-weight:700;color:var(--azulejo);width:34%}
+.qs{counter-reset:q;list-style:none;padding:0;display:grid;gap:10px;margin-top:16px}
+.qs li{counter-increment:q;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px 14px 60px;position:relative;font-size:17px}
+.qs li::before{content:counter(q);position:absolute;left:14px;top:12px;width:32px;height:32px;border-radius:50%;background:var(--divino);color:#FBEEDC;font:700 16px var(--ui);display:grid;place-items:center}
+.moments{padding-left:22px;font-size:17px}.moments li{margin-bottom:8px}
 ol.refs li{margin-bottom:8px}
 .banner{display:block;width:100%;max-width:100%;height:auto;border-radius:14px;margin-top:22px;border:1px solid var(--line)}
 .hq{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:20px}
@@ -258,13 +267,17 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
 <nav class="toc" aria-label="Capítulos">
   <div class="wrap">
     <a href="#historico">1. Histórico</a>
+    <a href="#jeitos">Muitos jeitos</a>
     <a href="#ciclo">2. O ciclo da festa</a>
+    <a href="#sabores">Sabores</a>
     <a href="#geracoes">3. Formação de gerações</a>
+    <a href="#ensina">A festa que ensina</a>
     <a href="#personagens">Personagens</a>
     <a href="#mestras">4. Mestras</a>
     <a href="#mapa">Mapa</a>
     <a href="#glossario">5. Glossário</a>
     <a href="#repertorio">6. Repertório</a>
+    <a href="#conversa">Para conversar</a>
     <a href="#fontes">Fontes</a>
   </div>
 </nav>
@@ -274,8 +287,34 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
   <div class="eyebrow">Capítulo 1</div>
   <h2>Histórico cultural</h2>
   <img src="img/divino.svg" data-still="img/divino.png" alt="Emblema do Divino: pomba creme de asas abertas com auréola e chamas douradas sobre fundo vermelho" style="float:right;width:min(220px,42%);height:auto;margin:0 0 12px 16px;background:#B5121B;border-radius:50%;padding:8px;box-shadow:0 0 0 3px #E0A83A">
-  <p>A Festa do Divino Espírito Santo é uma festa do catolicismo popular que se espalhou pelo mundo de língua portuguesa a partir dos Açores. No período colonial, casais açorianos foram trazidos para o Brasil e a devoção veio com eles. No Maranhão, ela se firmou em Alcântara e se espalhou pelo estado. <span class="src">(Ferretti, 2005; O Imparcial, 2015)</span></p>
-  <p>Em São Luís, a festa tem uma marca própria: ela faz parte do calendário dos terreiros de <strong>tambor de mina</strong>. Quase todos os terreiros organizam uma festa do Divino por ano, e o Centro de Cultura Popular Domingos Vieira Filho estimava mais de cem festas anuais na cidade. Quem conduz a música e o ritual são as <strong>caixeiras</strong>, mulheres que tocam a caixa e cantam os louvores ao Divino.</p>
+  <h3 style="margin-top:4px">O que é a Festa do Divino?</h3>
+  <p>A Festa do Divino Espírito Santo é uma grande celebração <strong>religiosa e popular</strong>. Nela, as pessoas homenageiam o <strong>Espírito Santo</strong>, que na fé cristã é a Terceira Pessoa da Santíssima Trindade, ao lado de Deus Pai e de Deus Filho. Na festa, ele é chamado carinhosamente de <strong>Divino</strong> e representado por uma pomba branca.</p>
+  <p>É uma das devoções mais antigas do catolicismo popular. Nela convivem coisas que parecem opostas: o sagrado e o profano, a tradição e a modernidade, a riqueza e a simplicidade. Em vez de se excluírem, esses lados se completam.</p>
+  <div class="cols" style="clear:both">
+    <div class="box"><h3>O lado sagrado</h3><p style="font-size:16px">Missas, procissões, novenas, ladainhas e benditos em louvor ao Divino. É o tempo da oração, do pagamento de promessas e do agradecimento.</p></div>
+    <div class="box"><h3>O lado profano</h3><p style="font-size:16px">As celebrações do Império do Divino, com folias, danças, cortejos, mesas de doces e outras expressões culturais. É o tempo da alegria e da partilha.</p></div>
+  </div>
+  <p style="margin-top:18px">A festa costuma acontecer entre <strong>maio e junho</strong>, em torno do <strong>Domingo de Pentecostes</strong>, celebrado cinquenta dias depois da Páscoa, contando o próprio domingo de Páscoa. Pentecostes lembra o dia em que, segundo a Bíblia, o Espírito Santo desceu sobre os apóstolos.</p>
+  <div class="note"><strong>Você sabia?</strong> Em muitos lugares do Brasil, a Festa do Divino não faz parte do calendário oficial da Igreja Católica. Ela vive da devoção e da participação do povo.</div>
+
+  <h3 style="margin-top:28px">De onde vem a festa?</h3>
+  <p>A Festa do Divino nasceu em <strong>Portugal</strong>, no século XIV, embora o culto ao Espírito Santo seja bem mais antigo. De lá, a devoção chegou às ilhas dos <strong>Açores</strong> e, com os colonizadores portugueses, ao Brasil. Por aqui, ela ganhou força entre os séculos XVIII e XIX, trazida principalmente por famílias açorianas. No Maranhão, firmou-se em <strong>Alcântara</strong> e se espalhou pelo estado. Os historiadores contam duas versões para a origem da festa:</p>
+  <div class="cols">
+    <div class="box"><h3>A versão da rainha Isabel</h3><p style="font-size:16px">No século XIV, na vila de Alenquer, em Portugal, a rainha Isabel de Aragão (1271-1336), esposa do rei D. Dinis e mais tarde chamada de Rainha Santa, promoveu celebrações pela construção de uma igreja dedicada ao Espírito Santo. Toda a corte foi convidada e as ruas foram enfeitadas. Onde a corte não podia estar, os devotos se vestiam de reis e rainhas. Dessa ideia vem o <strong>Império do Divino</strong>.</p></div>
+    <div class="box"><h3>A versão do abade Joaquim de Fiore</h3><p style="font-size:16px">Joaquim de Fiore (c. 1135-1202), abade italiano, ensinava que, depois do tempo de Deus Pai e do tempo de Deus Filho, chegaria o <strong>tempo do Espírito Santo</strong>, que governaria o mundo com paz, fraternidade e amor. No século XIII, essas ideias se espalharam pela Europa.</p></div>
+  </div>
+
+  <h3 style="margin-top:28px">Histórias curiosas</h3>
+  <ol class="timeline" aria-label="Histórias curiosas">
+    <li><span class="when">1385</span><span>O rei D. João I mandou organizar procissões obrigatórias em maio para afastar antigas festas pagãs chamadas <em>Maias</em>.</span></li>
+    <li><span class="when">Em alto-mar</span><span>A festa era tão importante que chegava a ser celebrada dentro das naus portuguesas que viajavam para a África, a Índia e o Brasil.</span></li>
+    <li><span class="when">Rio antigo</span><span>O Imperador do Divino podia ser uma criança ou um adulto e, em alguns lugares, tinha “direitos de rei”, como o de libertar presos comuns.</span></li>
+    <li><span class="when">1822</span><span>Na Independência, José Bonifácio escolheu o título de <strong>Imperador do Brasil</strong> porque o povo já conhecia a palavra “Imperador” por causa da festa, e menos a palavra “Rei”.</span></li>
+    <li><span class="when">1839</span><span>O artista francês Jean-Baptiste Debret publicou um desenho do cortejo do Divino no Rio de Janeiro, com o menino imperador recolhendo doações para a festa.</span></li>
+  </ol>
+
+  <h3 style="margin-top:28px">A festa em São Luís</h3>
+  <p>Em São Luís, a festa tem uma marca própria: ela faz parte do calendário dos terreiros de <strong>tambor de mina</strong>. Quase todos os terreiros organizam uma festa do Divino por ano, e o Centro de Cultura Popular Domingos Vieira Filho estimava mais de cem festas anuais na cidade. Quem conduz a música e o ritual são as <strong>caixeiras</strong>, mulheres que tocam a caixa e cantam os louvores.</p>
   <p>No centro da festa estão um altar ricamente decorado, a <em>tribuna</em>, um <em>mastro</em> levantado e derrubado com ritual, e um <em>império</em> de crianças vestidas como uma corte, com imperador, imperatriz e mordomos.</p>
 
   <h3 style="margin-top:22px">A história em quatro quadros</h3>
@@ -294,6 +333,15 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
     <figure><img src="img/sb_tribuna.svg" data-still="img/sb_tribuna.png" alt=""><figcaption>Tribuna<small>O altar do Divino</small></figcaption></figure>
     <figure><img src="img/sb_caixa.svg" data-still="img/sb_caixa.png" alt=""><figcaption>Caixa<small>O tambor das caixeiras</small></figcaption></figure>
   </div>
+  <div class="note" style="margin-top:18px"><strong>A história do mastro:</strong> a festa costuma começar com a procura e o corte de uma árvore na mata, que será o mastro da bandeira. A tradição conta que, quando o Espírito Santo veio ao mundo, tomou a forma de uma pomba que pousou numa oliveira. O mastro representa essa árvore e simboliza a ligação do Espírito Santo com o mundo terreno. O transporte do mastro é um momento muito concorrido, que contagia a população.</div>
+  <h3 style="margin-top:28px">Linha do tempo: das origens ao Brasil</h3>
+  <ol class="timeline" aria-label="Marcos das origens">
+    <li><span class="when">Séc. XII</span><span>O abade Joaquim de Fiore anuncia a chegada do “tempo do Espírito Santo”. Suas ideias se espalham pela Europa no século seguinte.</span></li>
+    <li><span class="when">Séc. XIV</span><span>Em Alenquer, a rainha Isabel de Aragão promove celebrações ao Espírito Santo. A festa ganha a forma de uma corte, o Império.</span></li>
+    <li><span class="when">Período colonial</span><span>A devoção chega ao Brasil com os portugueses e ganha força entre os séculos XVIII e XIX, com a vinda de açorianos. No Maranhão, firma-se em Alcântara.</span></li>
+    <li><span class="when">2010 e 2013</span><span>O IPHAN registra como patrimônio cultural do Brasil as festas do Divino de Pirenópolis (GO) e de Paraty (RJ).</span></li>
+  </ol>
+  <h3 style="margin-top:28px">Linha do tempo: a festa em São Luís</h3>
   <ol class="timeline" aria-label="Marcos históricos">
     <li><span class="when">Período colonial</span><span>A devoção ao Divino chega ao Brasil com casais açorianos trazidos pela Coroa portuguesa. <span class="src">(Ferretti, 2005)</span></span></li>
     <li><span class="when">Fins do séc. XIX</span><span>Há notícias da festa do Divino na Casa das Minas, terreiro jeje de São Luís. <span class="src">(Ferretti, 2005)</span></span></li>
@@ -307,10 +355,40 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
   </ol>
 
   <div class="cols">
-    <div class="box"><h3>Quem são as caixeiras</h3><p class="src keep" style="font-size:16px;color:var(--ink)">Tradicionalmente são mulheres com mais de cinquenta anos, em geral negras, de baixa renda e moradoras de bairros periféricos. Tocam por promessa e devoção, sem remuneração.</p><p class="src">Domingues, 2020; Ferretti, 2005</p></div>
+    <div class="box"><h3>Quem são as caixeiras</h3><p class="src keep" style="font-size:16px;color:var(--ink)">Elas cantam, dançam, tocam a caixa e abrem e fecham os trabalhos da festa, fazendo a ligação entre o mundo terreno e o divino. Tradicionalmente são mulheres com mais de cinquenta anos, em geral negras, de baixa renda e moradoras de bairros periféricos. Tocam por promessa e devoção, sem remuneração, e costumam ser caixeiras a vida toda. Em alguns festejos, homens também fazem parte do grupo.</p><p class="src">Domingues, 2020; Ferretti, 2005</p></div>
     <div class="box"><h3>Festa e terreiro</h3><p class="src keep" style="font-size:16px;color:var(--ink)">A festa liga o catolicismo popular ao tambor de mina. Depois do encerramento, em muitas casas há um toque de mina diante da tribuna em homenagem às entidades.</p><p class="src">Leal, 2018</p></div>
     <div class="box"><h3>Quando acontece</h3><p class="src keep" style="font-size:16px;color:var(--ink)">Várias casas fazem a festa no Domingo de Pentecostes, mas como são dezenas de festas, elas se espalham por boa parte do ano. As caixeiras-régias tocam em muitas casas: Dona Jacy contava 32 além da Casa das Minas.</p><p class="src">Ferretti, 2005; O Imparcial, 2015</p></div>
   </div>
+
+  <h3 style="margin-top:28px">O trabalho das caixeiras</h3>
+  <div class="cols">
+    <div class="box"><h3>A caixa</h3><p style="font-size:16px">Tambor de madeira coberto com pele de animal, parecido com a caixa militar e tocado com duas baquetas. Os toques são precisos e sincronizados, e são ensinados às novas gerações.</p></div>
+    <div class="box"><h3>As alvoradas</h3><p style="font-size:16px">São cantadas de madrugada, por volta das quatro horas, em volta do mastro. Há salvas de caixa também ao meio-dia e ao anoitecer.</p></div>
+    <div class="box"><h3>Os benditos</h3><p style="font-size:16px">No bendito de abertura, canta-se a história de Cristo do nascimento até Pentecostes. No Bendito de Hortelã, do encerramento, a história vai até a morte e a ressurreição, com ênfase na despedida.</p></div>
+    <div class="box"><h3>Uma brincadeira</h3><p style="font-size:16px">Caixeiras e Império passam horas procurando, nas casas da vizinhança, símbolos escondidos antes, como cetro, coroa e bandeira. A casa que “roubou” os símbolos paga uma prenda, geralmente bebidas e refrigerantes.</p></div>
+  </div>
+
+  <h3 style="margin-top:28px">A festa nos terreiros</h3>
+  <p>No Maranhão, a festa do Divino também faz parte do calendário religioso dos terreiros de <strong>tambor de mina</strong>, a principal religião afro-maranhense. Nesses lugares, o Divino é celebrado junto com o culto às entidades de matriz africana. Por isso, a festa nem sempre acontece só em Pentecostes e pode coincidir com o mês de santos católicos.</p>
+  <p>Essa aproximação tem uma história: no passado, pessoas escravizadas mantinham oratórios católicos para se proteger de perseguições e castigos. Hoje, os calendários dos terreiros apenas coincidem com as festas dos santos católicos, e cada religião mantém o seu próprio sentido.</p>
+  <div class="note"><strong>Para refletir:</strong> a Festa do Divino mostra como culturas diferentes, a portuguesa, a africana e a indígena, se encontram e criam algo novo, sem perder a tradição.</div>
+</section>
+
+<section id="jeitos" class="wrap">
+  <div class="eyebrow">Pelo Brasil</div>
+  <h2>Uma festa, muitos jeitos</h2>
+  <p>A festa veio de Portugal e manteve os símbolos principais e a estrutura básica. No Brasil, porém, ela foi se misturando com a cultura de cada lugar, incluindo influências africanas e indígenas. Por isso, cada região tem suas marcas.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Lugar</th><th>Marca da festa</th></tr></thead>
+    <tbody>
+      <tr><td>Vale do Guaporé (RO)</td><td>Procissão fluvial e ritual da oração nas águas. A região reúne comunidades ribeirinhas, quilombolas, indígenas e bolivianas.</td></tr>
+      <tr><td>Paraty (RJ)</td><td>Dança do Marrapaiá.</td></tr>
+      <tr><td>Pirenópolis (GO)</td><td>Cavalhadas, que encenam as batalhas entre cristãos e mouros.</td></tr>
+      <tr><td>Alcântara (MA)</td><td>Caixeiras do Divino, Império e doce de espécie.</td></tr>
+      <tr><td>Mogi das Cruzes (SP) e Itajaí (SC)</td><td>A festa é mais ligada à igreja: a cerimônia de início e a de encerramento acontecem lá dentro, e a corte do Império ocupa tronos na própria igreja.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note" style="margin-top:16px"><strong>Patrimônio cultural:</strong> as festas do Divino de Pirenópolis (GO) e de Paraty (RJ) foram reconhecidas pelo IPHAN como patrimônio imaterial do Brasil e inscritas no Livro de Registro das Celebrações.</div>
 </section>
 
 <section id="ciclo" class="wrap">
@@ -345,6 +423,46 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
     <ol class="steps" id="steps" role="tablist" aria-label="Etapas da festa"></ol>
     <article class="stepcard" id="stepcard" aria-live="polite"></article>
   </div>
+
+  <h3 style="margin-top:28px">Os momentos da festa pelo Brasil</h3>
+  <p>Cada lugar tem o seu jeito de festejar, mas alguns momentos aparecem em muitas celebrações:</p>
+  <ol class="moments">
+    <li><strong>A escolha do Império.</strong> De um ano para o outro, são escolhidos o casal de imperadores, os mordomos, os padrinhos do mastro e os colaboradores.</li>
+    <li><strong>A preparação das roupas.</strong> Vestimentas e cores são definidas com cerca de seis meses de antecedência.</li>
+    <li><strong>O corte e o levantamento do mastro.</strong> Uma árvore é procurada e derrubada na mata e, depois, transportada e fixada no local da festa.</li>
+    <li><strong>A abertura da tribuna.</strong> O altar do Divino é montado e aberto com um ritual.</li>
+    <li><strong>As alvoradas.</strong> Nos dias seguintes ao levantamento do mastro, há cantos junto à tribuna, ao amanhecer.</li>
+    <li><strong>O cortejo até a igreja.</strong> A corte do Império vai com os devotos até a igreja para ser abençoada pela autoridade religiosa.</li>
+    <li><strong>A coroação e as homenagens.</strong> Os imperadores são coroados, e o Divino é homenageado com rituais religiosos e populares.</li>
+    <li><strong>A distribuição de alimentos.</strong> Comidas e doces são partilhados com quem vai prestigiar a festa.</li>
+  </ol>
+  <div class="note"><strong>Para observar:</strong> a ordem e os detalhes mudam de uma cidade para outra. Converse com pessoas da sua comunidade para descobrir como a festa acontece no seu lugar.</div>
+
+  <h3 style="margin-top:28px">Como se forma o Império</h3>
+  <p>A festa se organiza em duas partes: uma dedicada ao Divino e outra ao <strong>Império do Divino</strong>, a corte simbólica que representa a realeza. Em alguns lugares, o Império é formado por adultos. Em outros, como em São Luís, por crianças e adolescentes, que representam os adultos escolhidos como patronos da festa.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Personagem</th><th>O que faz</th></tr></thead>
+    <tbody>
+      <tr><td>Imperador e imperatriz</td><td>São os principais responsáveis pela preparação e pela realização da festa. Tradicionalmente, os patronos arcam com a maior parte das despesas, e esse papel pode ser alternado entre os dois.</td></tr>
+      <tr><td>Mordomo régio e mordomo-mor</td><td>Fazem parte da corte do Império. Os mordomos também têm mestre-sala e músicos.</td></tr>
+      <tr><td>Padrinhos do mastro</td><td>São escolhidos para a festa e apadrinham o mastro, um dos símbolos mais importantes dela.</td></tr>
+      <tr><td>Aias, vassalo e mestre-sala</td><td>Acompanham a imperatriz. Ela pode ter duas aias, um vassalo e um mestre-sala, além de músicos de sopro.</td></tr>
+      <tr><td>Colaboradores</td><td>Outras pessoas que também compõem o Império e ajudam a realizar a festa.</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:14px">Os membros do Império costumam ser escolhidos de um ano para o outro, e as roupas e as cores são definidas com cerca de seis meses de antecedência. Nas festas mais tradicionais, o figurino imita as roupas da corte portuguesa de outros tempos.</p>
+</section>
+
+<section id="sabores" class="wrap">
+  <div class="eyebrow">À mesa</div>
+  <h2>Sabores da festa</h2>
+  <p>A comida é parte importante da Festa do Divino. A distribuição de alimentos, geralmente carnes e doces, é uma das atividades da festa e simboliza a <strong>partilha</strong>. Os doces ocupam lugar de destaque:</p>
+  <div class="cols">
+    <div class="box"><h3>Doce de espécie</h3><p style="font-size:16px">Típico de Alcântara, no Maranhão, a cidade onde o Divino se firmou no estado.</p></div>
+    <div class="box"><h3>Doce roseta</h3><p style="font-size:16px">Típico de Santa Catarina, outro estado onde a festa tem forte presença açoriana.</p></div>
+    <div class="box"><h3>Alfenim</h3><p style="font-size:16px">Em Portugal, é o doce mais famoso e reconhecido historicamente: uma massa de açúcar branco modelada em figurinhas, que antigamente era servida em bandejas de prata.</p></div>
+  </div>
+  <p style="margin-top:16px">Em algumas festas, os Impérios montam <strong>mesas de doces</strong> que ficam expostas por dois ou três dias, para serem admiradas. Depois, os responsáveis distribuem os doces a quem foi prestigiar a festa. Em São Luís, cada membro do império oferece a sua mesa no dia da festa.</p>
 </section>
 
 <section id="geracoes" class="wrap">
@@ -384,6 +502,22 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
     </div>
     <div class="note"><strong>Um cuidado:</strong> as fontes consultadas não descrevem uma “carreira” fixa de bandeireira até caixeira-régia. Bandeireiras e crianças do império têm cargos rituais próprios. Se a sua pesquisa de campo mostrar um caminho assim em alguma casa, registre com o nome da casa e de quem contou.</div>
   </div>
+</section>
+
+<section id="ensina" class="wrap">
+  <div class="eyebrow">Educação</div>
+  <h2>A festa que ensina</h2>
+  <p>Além de religiosa e cultural, a Festa do Divino também é educativa. Tudo nela segue um planejamento que obedece a uma tradição passada de geração em geração, principalmente pela <strong>tradição oral</strong>: os mais velhos contam, mostram e ensinam, e os mais novos aprendem participando. Quem participa da festa aprende, por exemplo:</p>
+  <div class="cols">
+    <div class="box"><h3>História</h3><p style="font-size:16px">A história do Brasil e de Portugal, por meio de histórias, comportamentos e hábitos das duas culturas.</p></div>
+    <div class="box"><h3>Música</h3><p style="font-size:16px">A tocar instrumentos, como a caixa, e a cantar, dançar e rezar, sem precisar de aulas formais.</p></div>
+    <div class="box"><h3>Convivência</h3><p style="font-size:16px">A se comportar de acordo com o papel que ocupa na corte, no caso das crianças e dos adolescentes do Império.</p></div>
+    <div class="box"><h3>Valores</h3><p style="font-size:16px">Solidariedade, partilha e respeito mútuo, vividos na prática durante toda a festa.</p></div>
+  </div>
+  <h3 style="margin-top:28px">E a escola com isso?</h3>
+  <p>A festa reúne arte, história, ensino religioso, geografia, língua portuguesa e outros componentes curriculares. Por isso, a escola pode usá-la para trabalhar de forma interdisciplinar: os toques e as cores na aula de Arte, a viagem da festa na de História, o mapa de São Luís na de Geografia, as palavras do glossário na de Língua Portuguesa e o respeito às diferentes formas de fé no Ensino Religioso.</p>
+  <p>A <strong>Lei nº 10.639, de 2003</strong>, depois ampliada pela <strong>Lei nº 11.645, de 2008</strong>, determina que a história e a cultura africana, afro-brasileira e indígena sejam ensinadas nas escolas, independentemente da religião de cada estudante. A Festa do Divino ajuda a cumprir esse objetivo ao mostrar a diversidade cultural presente em uma tradição que faz parte da história do Brasil.</p>
+  <div class="note"><strong>Você sabia?</strong> As festas mudam com o tempo, mas a tradição permanece. A riqueza da Festa do Divino está justamente na diversidade cultural que ela reúne.</div>
 </section>
 
 <section id="personagens" class="wrap">
@@ -483,6 +617,21 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
   </div>
 </section>
 
+<section id="conversa" class="wrap">
+  <div class="eyebrow">Sala de aula</div>
+  <h2>Para conversar em sala</h2>
+  <p>Use estas perguntas depois da leitura. Não há resposta única: o importante é ouvir as experiências de cada um.</p>
+  <ol class="qs">
+    <li>Você já participou ou assistiu a uma Festa do Divino? O que mais chamou a sua atenção?</li>
+    <li>Quais são os símbolos da festa? O que cada um representa?</li>
+    <li>Quem faz parte do Império do Divino? Por que as crianças e os adolescentes também participam?</li>
+    <li>O que as caixeiras fazem na festa? Por que a tradição oral é tão importante para elas?</li>
+    <li>Quais doces e comidas fazem parte da festa na sua cidade ou região?</li>
+    <li>A festa veio de Portugal e se misturou com outras culturas. Que elementos africanos, indígenas e portugueses você consegue identificar?</li>
+    <li>Como as pessoas de diferentes religiões podem aprender umas com as outras a partir de uma festa como essa?</li>
+  </ol>
+</section>
+
 <section id="fontes" class="wrap">
   <div class="eyebrow">Referências</div>
   <h2>Fontes</h2>
@@ -499,6 +648,8 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
     <li>O IMPARCIAL. Samba Divino para Casa de Nagô, abril de 2019. <a href="https://oimparcial.com.br/entretenimento-e-cultura/2019/04/samba-divino-para-casa-de-nago/" target="_blank" rel="noopener">Matéria</a></li>
     <li>O IMPARCIAL. Casa de Nagô une tradição e justiça climática no festejo do Divino Espírito Santo 2026, maio de 2026. <a href="https://oimparcial.com.br/noticias/2026/05/casa-de-nago-une-tradicao-e-justica-climatica-no-festejo-do-divino-espirito-santo-2026/" target="_blank" rel="noopener">Matéria</a></li>
     <li>O IMPARCIAL. Terreiro de Yemanjá é tema de exposição em São Luís, novembro de 2018. <a href="https://oimparcial.com.br/entretenimento-e-cultura/2018/11/terreiro-de-yemanja-e-tema-de-exposicao-em-sao-luis/" target="_blank" rel="noopener">Matéria</a></li>
+    <li>RODRIGUES, Edvaldo Costa. A Festa do Divino Espírito Santo em terreiro de culto de matriz africana e afro-brasileira. <em>Revista Educação e Cultura Contemporânea</em>, Rio de Janeiro, v. 17, n. 48, p. 469-492, 2020. DOI: 10.5935/2238-1279.20200044. Licença CC BY-NC 4.0. <a href="https://doi.org/10.5935/2238-1279.20200044" target="_blank" rel="noopener">Artigo</a></li>
+    <li>IPHAN. Festa do Divino Espírito Santo de Pirenópolis (registro de 2010) e de Paraty (registro de 2013), Livro de Registro das Celebrações.</li>
     <li>TURISMO SÃO LUÍS. Casa de Matriz Africana. <a href="https://turismosaoluis.com.br/en/experiences/casa-de-matriz-africana/" target="_blank" rel="noopener">Página</a></li>
     <li>WIKIPEDIA. Casa das Minas. <a href="https://en.wikipedia.org/wiki/Casa_das_Minas" target="_blank" rel="noopener">Verbete</a></li>
     <li>O IMPARCIAL. Cortejo só de mulheres é realizado em louvor ao Divino Espírito Santo em São Luís, julho de 2024. <a href="https://oimparcial.com.br/noticias/2024/07/cortejo-so-de-mulheres-e-realizado-em-louvor-ao-divino-espirito-santo-em-sao-luis/" target="_blank" rel="noopener">Matéria</a></li>
@@ -592,9 +743,9 @@ const G=[
  ["Alvorada","Salva de caixas ao amanhecer, ao meio-dia e ao anoitecer nos dias de festa. Continua com a Alvoradinha.","Ferretti, 2005"],
  ["Bancados","Cargos da festa patrocinados e pagos por adultos, geralmente pais ou parentes das crianças do império.","Leal, 2018"],
  ["Bandeireira","Menina que segura a bandeira do Divino e dança com as caixeiras diante do trono e do mastro.","Ferretti, 2005"],
- ["Bendito de Hortelã","Cântico do fechamento da tribuna, que encerra a festa.","Ferretti, 2005"],
+ ["Bendito de Hortelã","Bendito do fechamento da tribuna, que conta a história de Cristo com ênfase na despedida.","Ferretti, 2005"],
  ["Buscamento do mastro","Ida, em cortejo festivo e masculino, para buscar o tronco do mastro, com acompanhamento das caixeiras.","Ferretti, 2005; Leal, 2018"],
- ["Caixa","Tambor tocado pelas caixeiras, semelhante à caixa militar.","Domingues, 2020"],
+ ["Caixa","Tambor de madeira coberto com pele de animal, tocado pelas caixeiras com duas baquetas, semelhante à caixa militar.","Domingues, 2020"],
  ["Caixeira","Mulher que toca a caixa e canta os louvores do Divino. Atua por promessa e devoção.","Ferretti, 2005"],
  ["Caixeira-mor","Auxiliar da caixeira-régia, que a substitui em caso de imprevisto.","Ferretti, 2005; Domingues, 2020"],
  ["Caixeira-régia","Líder do grupo de caixeiras. Conhece todos os cânticos e conduz todas as etapas do ritual.","Ferretti, 2005; Domingues, 2020"],
@@ -613,15 +764,25 @@ const G=[
  ["Posses","Trajes e adereços cerimoniais repassados a cada ano entre as crianças dos impérios.","Leal, 2018"],
  ["Repente","Verso improvisado pelas caixeiras durante os toques.","O Imparcial, 2015"],
  ["Serramento do mastro","Corte do mastro na segunda ou terça-feira após a festa, ao som do carimbó de velha.","Ferretti, 2005"],
- ["Tambor de mina","Religião afro-maranhense. Em São Luís, quase todos os terreiros incluem a festa do Divino no seu calendário.","Ferretti, 2005"],
+ ["Tambor de mina","Principal nome das religiões afro-maranhenses. Em São Luís, quase todos os terreiros incluem a festa do Divino no seu calendário.","Ferretti, 2005"],
  ["Toque","Peça musical das caixas ligada a um momento do ritual. No terreiro, também nomeia a sessão de tambor de mina.","Ferretti, 2005; Leal, 2018"],
  ["Tribuna","Altar ricamente decorado onde ficam os símbolos do Divino e onde se concentra parte importante da festa.","Leal, 2018"],
  ["Visitas","Saídas do império e das caixeiras às casas dos mordomos e das crianças do império.","Ferretti, 2005"],
- ["Vodunsi","Filha de santo iniciada nos terreiros jeje, como a Casa das Minas.","Ferretti, 2005"]
+ ["Vodunsi","Filha de santo iniciada nos terreiros jeje, como a Casa das Minas.","Ferretti, 2005"],
+ ["Aia","Dama que acompanha a imperatriz no Império do Divino.","Rodrigues, 2020"],
+ ["Alfenim","Doce português de massa de açúcar branco, modelado em forma de figurinhas.","Rodrigues, 2020"],
+ ["Bendito","Hino solene cantado na abertura e no encerramento da tribuna.","Rodrigues, 2020"],
+ ["Cetro","Bastão que acompanha a coroa do Divino, símbolo de realeza.","Rodrigues, 2020"],
+ ["Divino","Nome pelo qual o Espírito Santo é homenageado na festa.","Rodrigues, 2020"],
+ ["Doce de espécie","Doce típico de Alcântara, presente nas mesas da festa.","Rodrigues, 2020"],
+ ["Partilha","Divisão de alimentos e doces com todos que vão à festa.","Rodrigues, 2020"],
+ ["Pentecostes","Domingo celebrado cinquenta dias depois da Páscoa, quando se lembra a vinda do Espírito Santo.","Rodrigues, 2020"],
+ ["Tradição oral","Forma de ensinar e aprender por meio da fala, das histórias e da prática.","Rodrigues, 2020"]
 ];
 const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
 let letter="";
 const lettersEl=$("#letters");
+G.sort((a,b)=>a[0].localeCompare(b[0],"pt"));
 const LET=[...new Set(G.map(x=>norm(x[0])[0].toUpperCase()))].sort();
 lettersEl.innerHTML=["Todas",...LET].map(l=>`<button type="button" data-l="${l==="Todas"?"":l}" aria-pressed="${l==="Todas"}" style="${l==="Todas"?"width:auto;padding:0 10px":""}">${l}</button>`).join("");
 function renderGloss(){
