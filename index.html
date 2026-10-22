@@ -209,6 +209,8 @@ dl.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 .todo{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px;max-width:760px}
 .todo label{display:flex;gap:10px;align-items:flex-start;font-size:17px;cursor:pointer}
 .todo input{margin-top:6px;accent-color:var(--divino);width:18px;height:18px;flex:none}
+main p,main li,.term dd,.box p,.gen p,.person li,.stepcard p,.toques details p,.tbl td+td,.note{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+ul.refs.abnt li{text-align:left}
 ol.refs{padding-left:22px;font-size:16px;max-width:80ch}
 .tbl-wrap{overflow-x:auto;margin-top:16px}
 .tbl{width:100%;border-collapse:collapse;font-size:16px}
@@ -662,6 +664,7 @@ footer{padding-block:32px 48px;font-family:var(--ui);font-size:14px;color:var(--
 <footer class="wrap">Cartilha produzida para o projeto de aniversário de São Luís. Conteúdo baseado nas fontes listadas; perfis de pessoas trazem apenas dados publicados.</footer>
 
 <script>
+document.documentElement.lang="pt-BR";
 const STILL=matchMedia("(prefers-reduced-motion: reduce)").matches,IMX=STILL?".png":".svg";
 if(STILL)document.querySelectorAll("img[data-still]").forEach(im=>im.src=im.dataset.still);
 
